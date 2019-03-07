@@ -1,0 +1,248 @@
+<template>
+  <view class="container">
+    
+
+    <view class="panel" style="background-image:url('{{icon8080}}')">
+      
+      <view class="zan-cell zan-cell--access user-info-cell" >
+        <view class="zan-cell__icon avatar-container">
+          
+          <view class="avatar"><open-data style="border-radius:30px;" type="userAvatarUrl"></open-data></view>
+        </view>        
+        <view class="zan-cell__bd" >
+          
+          <view class="nickname"><open-data type="userNickName"></open-data></view>
+          <view class="location">{{gzh}}</view>
+           
+        </view>
+        
+        <view class="zan-cell__bd" style="margin-top:40px;margin-left:40px" @tap="change">
+          <image class="img" src="../images/lingdang.png"></image>
+          <view class="text" hidden="{{bigfont}}"> 开启大号字体</view>
+          <view class="text" hidden="{{!bigfont}}"> 关闭大号字体</view>
+        </view>
+        
+      </view>
+    </view>
+    
+   <view class="page">
+        
+  
+       <view class="page__desc">个人功能</view>
+    
+        
+        
+        <view class="page__bd">
+            <view class="weui-grids">
+                
+                    <navigator url="./mytopic" class="weui-grid" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon" src="../images/213424.png" />
+                        <view class="weui-grid__label" style="font-size:12px">我的主题</view>
+                    </navigator>
+                
+                <navigator url="./myPosts" class="weui-grid" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon" src="../images/sdadas.png" />
+                        <view class="weui-grid__label">我的帖子</view>
+                    </navigator>
+                    <navigator url="./collegeTopics" class="weui-grid" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon" src="../images/yunaxi.png" />
+                        <view class="weui-grid__label">院系主题</view>
+                    </navigator>
+                    <navigator url="./bind" class="weui-grid" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon" src="../images/zhanghao.png" />
+                        <view class="weui-grid__label">账号绑定/解绑</view>
+                    </navigator>
+                    <navigator url="./advice" class="weui-grid" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon" src="../images/emoji-1.png" />
+                        <view class="weui-grid__label">意见建议</view>
+                    </navigator>
+                    <navigator url="./detail?gzh={{gzh}}" class="weui-grid" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon" src="../images/People_72px_1095029_easyicon.net.png" />
+                        <view class="weui-grid__label">个人资料</view>
+                    </navigator>
+                    
+                    <view class="weui-grid" hover-class="weui-grid_active">
+                         <button open-type="share" class="weui-grid1">
+                        <image class="weui-grid__icon" src="../images/share_1099px_1202921_easyicon.net.png" />
+                        <view class="weui-grid__label">分享给好友</view>
+                      </button>
+                    </view>
+                    
+                    
+            </view>
+     
+    </view>
+    </view>
+    
+<view class="weui-footer" style="margin-top:10px">
+    <view class="weui-footer__text">版本：1.0</view>
+            </view>
+
+
+
+
+    
+  </view>
+
+</template>
+
+
+
+
+<script>
+import wepy from 'wepy'
+import base64 from '../images/base64'
+import tip from '../pages/js/tip'
+
+export default class Settings extends wepy.page {
+  config = {
+    navigationBarTitleText: '个人中心',
+    navigationBarBackgroundColor:"#FF7181FF",
+    navigationBarTextStyle:"white",
+
+
+
+  }
+
+  data = {
+    userInfo: {
+      nickName: 'loading...',
+      
+    },
+    gzh:Number,
+    
+    icon8080:base64.icon8080,
+    auth:true,
+    bigfont:false
+
+  }
+
+  methods = {
+    
+    
+    onShareAppMessage(res) {
+
+        if (res.from === 'button') {
+          // 来自页面内转发按钮
+          console.log(res.target)
+
+        }
+        return {
+          title: "科研管理",
+          path: '/pages/index',
+          success: function(res) {
+            // 转发成功
+          },
+          fail: function(res) {
+            // 转发失败
+          }
+        }
+      },
+      change(){
+        console.log(this.bigfont)
+        //this.$parent.globalData.bigfont=true
+        
+        if (this.bigfont) {
+          
+          this.$parent.globalData.bigfont=false
+          this.bigfont=false
+          this.$apply()
+        }else{
+          wepy.showToast({
+                title: '大号字体部分文字有效',
+                icon: 'none',
+                duration: 1000
+              })
+        this.$parent.globalData.bigfont=true
+        this.bigfont=true
+        this.$apply()}
+      }
+  }
+
+  watch = {
+    
+}
+  
+  onLoad() {
+    
+     this.gzh=this.$parent.globalData.userinfo.gzh;
+     
+    
+
+            
+            
+     
+     
+     
+  }
+}
+</script>
+<style lang="less" scoped>
+.img{
+  width:40px;
+  height:40px;
+  margin-left:20px 
+
+}
+.btn{
+  
+}
+.text{
+  font-size:14px;
+  color:#FFFFFFFF;
+}
+.weui-grid1{
+    padding:0;
+    margin:0;
+    background-color:transparent;
+    height:transparent;
+    border-radius:0;
+    &::after{
+      content:none
+    }
+
+
+}
+.user-info-cell{
+  height: 70px;
+  .avatar-container{
+    display: flex;
+    margin-top:10px;
+    align-items: center;
+    .avatar{
+      margin-left:20rpx;
+      margin-top:20rpx ;
+      width: 150rpx;
+      height: 150rpx;
+      border-radius:30px;
+    }
+  }
+  .location {
+    margin-top: 5px;
+    font-size: 13px;
+    text-align:left;
+    
+    color:#FFFFFFFF;
+     
+  }
+  .nickname{
+    font-size:20px;
+    color:#FFFFFFFF;
+    margin-top:8px;
+    
+    text-align:left
+  }
+
+}
+.weui-grid__label{
+  font-size:12px
+}
+.panel{
+  width:100wv;
+  height:350rpx;
+  border-bottom-right-radius:8px;
+  border-bottom-left-radius:8px;
+
+}
+
+</style>

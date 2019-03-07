@@ -1,0 +1,41 @@
+<style lang="less">
+.img{
+  width:100%;
+  height:50px;
+
+}
+</style>
+<template>
+  <view class="container">
+    <image src="../images/D469565680002F8A1715894B2A120B48.png" class="img"></image>
+    <nav></nav>
+    <subnav></subnav>
+    <news></news>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import nav from '../components/nav'
+  import subnav from '../components/subnav'
+  import news from '../components/news'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '科研系统'
+    };
+    components={
+      nav:nav,
+      subnav:subnav,
+      news:news
+    };
+    data={
+
+
+    }
+    onLaunch(){
+      
+    }
+    
+  }
+</script>

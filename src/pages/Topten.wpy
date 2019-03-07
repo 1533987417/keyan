@@ -1,0 +1,103 @@
+<template>
+<scroll-view scroll-y style="height:1000rpx"  bindscrolltolower="lower"
+ scroll-with-animation="true" bindscroll="bindscroll">
+<block wx:for="{{info}}" wx:key="rowId">
+<navigator url="article?tid={{item[0]}}" open-type="navigate">
+      <view class="swiper-item">{{item[1]}}</view>
+      <view style="display:flex">
+    <view class="sub_swiper-item weui-cell__hd">时间：{{item[3]}}</view>
+    
+  </view>
+    <view class="fenge"></view>
+  </navigator>  
+</block>
+
+</scroll-view> 
+</template>
+
+<style lang="less" scoped>
+
+.swiper-item{
+  
+   color:#000000FF;
+  font-size:15px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  letter-spacing:2px;
+  text-align:left;
+  margin-left:12px;
+  
+}
+.sub_swiper-item{
+  color:#A69D86;
+  font-size:13px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  letter-spacing:2px;
+  text-align:left;
+  margin-left:10px;
+  margin-top:4px;
+  
+}
+.fenge{
+    height: 1px;
+  width: 100%;
+  background-color:#DCDCDC;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  }
+  .imgaction{
+    width: 12px;
+    height:12px;
+    margin-left:2px;
+    float:center;
+  margin-top:4px;
+
+    
+  }
+</style>
+
+
+<script>
+import wepy from 'wepy'
+import util from '../pages/js/util'
+import tip from '../pages/js/tip'
+import config from '../pages/js/config'
+import {wxRequest} from '../pages/js/Request'
+
+
+
+export default class web extends wepy.page {
+  config = {
+    navigationBarTitleText: '热帖榜'
+  }
+
+  data = {
+   bigfont:Boolean,
+   info:[]
+  }
+
+
+  methods = {
+    
+    }
+  
+
+  events = {}
+
+ async onLoad() {
+    let res=await wxRequest('get',config.service.Topten+'?fid=1')
+    console.log(res)
+    var x
+    for(x in res){
+                  
+      res[x][3]=res[x][3].slice(0,10);
+                  
+      }
+    this.info=res
+    this.$apply()
+  }
+}
+</script>

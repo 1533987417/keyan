@@ -1,0 +1,37 @@
+.imgaction {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.fenge {
+  height: 1px;
+  width: 100%;
+  background-color: #DCDCDC;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+.weui-cell__bd {
+  text-align: left;
+  width: 80%;
+  margin-top: 5px;
+}
+.textbody {
+  margin-left: 55px;
+  margin-right: 2px;
+  font-size: 15px;
+}
+.imgaction {
+  width: 20px;
+  height: 20px;
+  display: block;
+  margin-right: 5px;
+}
+.swiper-item {
+  color: #000000;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+  letter-spacing: 1px;
+}

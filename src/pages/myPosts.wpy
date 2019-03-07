@@ -1,0 +1,159 @@
+<template>
+
+ 
+  <scroll-view scroll-y style="height:auto;margin-bottom:50px">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">全部回帖 共{{count}}条</view>
+      <view class="weui-panel__bd">
+        <block  wx:for="{{topiclist}}" wx:key="{{item.pid}}" >
+         
+          <view class="weui-cell">
+             <navigator url="article?tid={{item.tid}}" open-type="navigate">
+            <view class="weui-cell__bd">
+            
+              <view class="swiper-item" > Re:{{item.title}}</view>
+            
+            <view style="font-size: 15px;color: #1E46E0FF;">{{item.message}}</view>
+            <view style="font-size: 12px;color: #888888;">{{item.postdatetime}}</view>
+
+          </view>
+          </navigator>
+        </view>
+        <view class="textbody"><wxparser rich-text="{{item[8]}}"></wxparser></view>
+        
+      </block>
+      
+      <view hidden="{{!flag}}" class="weui-loadmore">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
+      </view>   
+      <view hidden="{{flag}}" class="weui-loadmore weui-loadmore_line">
+
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+      </view>
+    </view>
+    
+  </view>
+  
+</scroll-view>
+</template>
+<script>
+import wepy from 'wepy'
+import config from '../pages/js/config'
+import tip from '../pages/js/tip'
+import {wxRequest} from '../pages/js/Request'
+
+
+
+export default class test extends wepy.page {
+  components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+            
+            
+          }
+          config = {
+            "navigationBarBackgroundColor":"#fcfcfc",
+            "navigationBarTitleText":"我的帖子",
+            
+          }
+          data={
+           flag:true,
+           topiclist:[],
+           PageIndex:0,
+           count:Number
+         }
+         onLoad(){
+           this.getmore();
+         }
+         onReachBottom(){
+          console.log("到达底部");
+          this.getmore();
+
+        }
+        async onShow(){
+          let that=this;
+            /*wepy.request(config.service.getMyCount+'?gzh='+that.$parent.globalData.userinfo.personid).then((d)=>{
+                 console.log(d.data);
+                 console.log(d);
+                 that.count=d.data;
+                 that.$apply();
+
+           }
+           )*/
+           let res= await wxRequest('get',config.service.getPostsCount+'?gzh='+that.$parent.globalData.userinfo.gzh)
+           that.count=res
+           that.$apply()
+
+         }
+         async getmore(falg2=true){
+          if(this.flag){
+            let that=this;
+            this.PageIndex=this.PageIndex+1;
+          
+            let res=await wxRequest('get',config.service.getMyPost+'?gzh='+that.$parent.globalData.userinfo.gzh+'&PageIndex='+that.PageIndex)
+            console.log(res)
+            if(res.length==0){
+              that.flag=false
+              
+            }else if(res.length<8){
+              that.flag=false
+            }
+            var x
+            for(x in res){
+              res[x].postdatetime=res[x].postdatetime.slice(0,10);
+            }
+            //console.log(res)
+            this.topiclist=this.topiclist.concat(res);
+            this.$apply();
+
+          }
+        }
+        methods={
+         
+      }
+        
+
+      }
+      </script>
+      <style lang="less">
+      .imgaction{
+        width: 20px;
+        height: 20px;
+        display: block;
+      }
+      .fenge{
+        height: 1px;
+        width: 100%;
+        background-color:#DCDCDC;
+        margin-bottom: 10px;
+        margin-top: 5px;
+      }
+      .weui-cell__bd{
+        text-align: left;
+        width:80%;
+        margin-top:5px;
+      }
+      
+      .textbody{
+        margin-left: 55px;
+        margin-right: 2px;
+        font-size: 15px;
+      }
+      .imgaction{
+        width: 20px;
+        height: 20px;
+        display: block;
+        margin-right:5px;
+      }
+      .swiper-item{
+        color:#000000;
+        font-size:15px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        width: 100%;
+        white-space:nowrap;
+        letter-spacing:1px;
+
+        
+      }
+      </style>

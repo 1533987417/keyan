@@ -1,0 +1,92 @@
+<template>
+
+<view class"container1">
+       
+    <view class="nav_list1">
+      <navigator open-type="navigate" url="/pages/zcinfo">
+        <image src="../images/i11.png" class="nav_icon"></image>
+        <view class="nav_text">科研政策</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/teacherinfo">
+        <image src="../images/i06.png" class="nav_icon"></image>
+        <view class="nav_text">教师科研</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/require">
+        <image src="../images/i04.png" class="nav_icon"></image>
+        <view class="nav_text">地方需求</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/inform">
+        <image src="../images/i09.png" class="nav_icon"></image>
+        <view class="nav_text">科研通知</view>
+      </navigator>
+    </view>
+    
+     <view class="nav_list1">
+      <navigator open-type="navigate" url="/pages/interaction">
+        <image src="../images/i03.png" class="nav_icon"></image>
+        <view class="nav_text1">互动交流</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/dynamic">
+        <image src="../images/icon_1.png" class="nav_icon"></image>
+        <view class="nav_text1">科研动态</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/share">
+        <image src="../images/i10.png" class="nav_icon"></image>
+        <view class="nav_text1">资源共享</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/report">
+        <image src="../images/icon_25.png" class="nav_icon"></image>
+        <view class="nav_text1">学术报告</view>
+      </navigator>
+    </view>
+</view>
+</template>
+
+
+<script>
+    import wepy from 'wepy'
+    export default class Index extends wepy.component {
+        components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+            
+        }
+        data={
+        
+
+        }
+    }
+</script>
+<style lang="less">
+.container1{
+    margin-top:-40rpx;
+    margin-bottom:8px;
+    background-color:#FFFFFF;
+    border-radius:4px;
+    position:relative;
+    margin-left:6px;
+    margin-right:6px;
+    box-shadow: 0rpx 4rpx 10rpx #ddd;
+
+  }
+.nav_list1{
+  
+
+  display:flex;
+  font-size:30rpx;
+  justify-content:space-around;
+  padding:10rpx 30rpx;
+  }
+  .nav_icon{
+    height:80rpx;
+    margin:0 auto;
+    width:80rpx;
+    margin-bottom:14rpx;
+  }
+  .navigator{
+    text-align:center
+  }
+  .nav_text1{
+    font-size: 26rpx
+  }
+
+</style>

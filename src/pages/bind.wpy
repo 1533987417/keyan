@@ -1,0 +1,227 @@
+<style lang="less">
+  page {
+  height: 100%;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+}
+  .help {
+    font-size: 0.7rem;
+    color: #888;
+    padding: 0 3%;
+  }
+  .input-group {
+    &:hover {
+      transition: all 1s;
+      border: 1px solid #fefefe;
+      .input-label {
+        color: #fefefe;
+        border-right: 1px solid #fefefe;
+      }
+    }
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    padding: 25rpx 10rpx;
+    margin: 40rpx 3%;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    .input-label {
+      color: #fefefe;
+      font-size: 13pt;
+      height: 25rpx;
+      line-height: 25rpx;
+      padding: 0 25rpx;
+      border-right: 1px solid #d8d8d8;
+    }
+    input {
+      color: #fefefe;
+      flex: 1;
+      font-size: 13pt;
+      min-height: 52rpx;
+      height: 52rpx;
+      line-height: 52rpx;
+      padding: 0 25rpx;
+    }
+    .input-placeholder,
+    picker.placeholder {
+      color: #ccc;
+    }
+  }
+  #bind {
+    width: 100%;
+    height: 100%;
+    #content {
+      border-radius: 10rpx;
+      margin: 100rpx auto;
+      padding-top: 40rpx;
+      background-color:#5B5B5BFF;
+      width: 95%;
+      height: 700rpx;
+      #title {
+        font-size: 40rpx;
+        text-align: center;
+        color: #fefefe;
+      }
+      button {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+       
+        margin: 20rpx; // width: calc(~"100% - 40rpx");
+      }
+      form {
+        padding-top: 20rpx;
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+</style>
+
+<template>
+  <view id="bind">
+    
+    <view id="content">
+      <view id="title">
+        绑定{{types[type].name}}
+      </view>
+      <form @submit="bind">
+        <view class="input-group" hover-class="active">
+          <text class="input-label">工号</text>
+          <input name="student_id" type="number" placeholder="请输入您的学号/工号" />
+        </view>
+        <view class="input-group" hover-class="active">
+          <text class="input-label">密码</text>
+          <input name="password" type="password" placeholder="请输入您的密码" />
+        </view>
+        <view class="help">
+          <view>{{types[type].help}}</view>
+        </view>
+        <button formType="submit">绑定</button>
+      </form>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from "wepy"
+  import tip from '../pages/js/tip'
+  import  config  from '../pages/js/config'
+  import db from '../pages/js/db'
+  import {wxRequest} from '../pages/js/Request'
+
+ 
+  export default class BindJwc extends wepy.page {
+    config = {
+      navigationBarTitleText: "绑定账号",
+      navigationBarBackgroundColor: '#090a0f',
+      navigationBarTextStyle: 'white',
+    };
+    
+    components = {};
+    data = {
+      type: "bind",
+      types: {
+        "bind": {
+          "name": "统一认证账号",
+          "url": "/bind",
+          "verify": "verify",
+          "help": "密码为统一身份认证平台(即EDU邮箱)的密码，默认密码为身份证后六位,忘记密码可以访问 yzu.edu.cn 找回"
+        },
+        
+      }
+    }
+    methods = {
+      bind(e) {
+        let params = e.detail.value;
+        if (params.student_id == 0 || params.password == "") {
+          tip.alert("学号密码必填！");
+          return;
+        }
+        this.Bind(params);
+      }
+    }
+     onLoad(option) {
+      wepy.login().then((d)=>{
+         wepy.request(config.service.loginbywx+'?code='+d.code).then((e)=>{
+
+          console.log(e)
+          if(e.data.data.gzh!=undefined){
+          wepy.showModal({
+            title: "账号检测",
+            content: "已检测到该微信绑定了工号"+e.data.data.gzh+"是否直接登陆",
+            cancelText:"重新绑定",
+            confirmText:"直接登陆"
+            }).then((d)=>{
+                console.log(d)
+                if(d.confirm){
+                    console.log("登陆啦");
+                    console.log(e.data.token)
+                    db.Set('token',e.data.token);
+                    this.$parent.globalData.userinfo=e.data.data;
+                    db.Set('userinfo',e.data.data)
+                    wepy.reLaunch({url:"/pages/index"})
+                }
+                else if(d.cancel){
+                  console.log("解绑啦")
+                }
+
+            });}
+         });
+          
+       })
+    }
+    async Bind(params) {
+      try {
+        console.log(params);
+
+        wepy.login().then((d)=>{
+          console.log(d.code);
+          var code= d.code;
+          wepy.request({url:config.service.bindinfo+'?code='+code+'&gzh='+params.student_id+'&password='+params.password}).then((d)=>{
+            console.log(d.data);
+            if(d.data.status){
+            db.Set('token',d.data.token)
+            this.$parent.globalData.userinfo=d.data.data;
+            db.Set('userinfo',d.data.data)
+            tip.success("绑定成功");
+
+            wepy.reLaunch({url:"/pages/index"})
+          }
+             
+             else{
+              wepy.showToast({
+                title: '账号密码不匹配',
+                icon: 'none',
+                duration: 1000
+              })
+             }
+
+
+          });
+
+
+        });
+
+
+
+/*
+
+        const res = await this.POST(this.types[this.type].url || "/bind", params);
+        db.Set(this.types[this.type].verify || "verify", 1);
+        wepy.showModal({
+          title: "绑定成功",
+          content: "点击确认掉转到首页，请在首页点击查看we川大使用说明！",
+          showCancel: false,
+          success: function(res) {
+            // 关闭所有页面并且跳转到首页，确保verify数据重新获取
+            wepy.reLaunch({
+              url: "/pages/index"
+            });
+          }
+        });*/
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+</script>

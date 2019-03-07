@@ -1,0 +1,64 @@
+<style>
+page{
+    background-color: #FFFFFF;
+}
+
+</style>
+<template>
+    <view class="page">
+        <view class="weui-msg">
+            <view class="weui-msg__icon-area">
+                <icon type="success" size="93"></icon>
+            </view>
+            <view class="weui-msg__text-area">
+                <view class="weui-msg__title">发布成功</view>
+                <view class="weui-msg__desc">内容详情，可进入个人首页查看
+                </view>
+            </view>
+            <view class="weui-msg__opr-area">
+                <view class="weui-btn-area">
+                    <button  type="primary" @tap="priview">查看</button>
+                    <button @tap="back" type="default">返回首页</button>
+                </view>
+            </view>
+            <view class="weui-msg__extra-area">
+                <view class="weui-footer">
+                    
+                    <view class="weui-footer__text">Copyright © 2008-2016 yzu</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+
+    export default class MsgSuccess extends wepy.page {
+
+        components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+            
+        };
+        config = {
+            navigationBarTitleText: '提示页'
+        }
+        data={
+           tid:Number
+       }
+       onLoad(e){
+          console.log(e.tid);
+          this.tid=e.tid;
+       }
+       methods={
+          priview(){
+             this.$navigate("./article?tid="+this.tid)
+          },
+          back(){
+            wepy.reLaunch({url:"/pages/index"})
+          }
+       
+       }
+
+    }
+</script>

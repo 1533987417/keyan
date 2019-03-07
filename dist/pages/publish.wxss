@@ -1,0 +1,18 @@
+
+.fenge{
+  height: 1px;
+  width: 100%;
+  background-color:#DCDCDC;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  }
+.picker{
+    display:flex;
+    margin-left:10px;
+}
+#title{
+    background-color: #EFEFEF;
+    margin-left:5px;
+    width:80%;
+}
+

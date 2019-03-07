@@ -1,0 +1,35 @@
+<template>
+<view>sad</view>
+<web-view src="{{src}}"></web-view>
+</template>
+
+<style lang="less" scoped>
+
+</style>
+
+
+<script>
+import wepy from 'wepy'
+
+export default class web extends wepy.page {
+  config = {
+    navigationBarTitleText: '校内通知'
+  }
+
+  data = {
+   src:String
+  }
+
+  methods = {}
+
+  events = {}
+
+  onLoad(e) {
+    console.log(e)
+    e.url=e.url.replace('%3F','?')
+    e.url=e.url.replace('%3D','=')
+    this.src=e.url
+    this.$apply()
+  }
+}
+</script>

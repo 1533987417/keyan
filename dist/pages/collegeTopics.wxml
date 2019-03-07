@@ -1,0 +1,42 @@
+
+
+ 
+  <scroll-view scroll-y style="height:auto;margin-bottom:50px">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">全部主题 共{{count}}条</view>
+      <view class="weui-panel__bd">
+        <block  wx:for="{{topiclist}}" wx:key="{{item[0]}}">
+         
+          <view class="weui-cell">
+            
+            
+             <navigator url="article?tid={{item[1]}}" open-type="navigate">
+              <view class="swiper-item">{{item[4]}}</view>
+            
+            <view style="display:flex">
+            <view style="font-size: 12px;color: #888888;margin-top:4px;" class="weui-cell__hd">{{item[12]}} |{{item[13]}} | {{item[6]}}</view>
+            <view style="margin-left:20px">
+              <image src="../images/browse.png" class="imgaction"/><text class="sub_swiper-item">{{item[10]}}</text>
+              <image src="../images/edit.png" class="imgaction"/><text class="sub_swiper-item">{{item[11]}}</text>
+            </view>
+          </view>
+            </navigator>
+          
+        </view>
+        
+        
+      </block>
+      
+      <view hidden="{{!flag}}" class="weui-loadmore">
+        <view class="weui-loading"/>
+        <view class="weui-loadmore__tips">正在加载</view>
+      </view>   
+      <view hidden="{{flag}}" class="weui-loadmore weui-loadmore_line">
+
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+      </view>
+    </view>
+    
+  </view>
+  
+</scroll-view>

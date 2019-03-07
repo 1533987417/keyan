@@ -1,0 +1,116 @@
+<style lang="less">
+.publisher-btn{
+  width: 50px;
+  height: 50px;
+  background-color: #00E003;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -1px 2px 9px 0px rgba(176,176,176,1);
+
+   
+}
+.navbar {
+    .page,
+    .page__bd{
+        height: 100%;
+    }
+    .page__bd{
+        padding-bottom: 0;
+    }
+    .weui-tab__content{
+        padding-top: 0px;
+        text-align: center;
+    }
+}
+image{
+    width: 60rpx;
+    height: 60rpx;
+  }
+</style>
+<template>
+    <view class="navbar page">
+        <view class="page__bd">
+          <searchbar :fid.sync="fid"></searchbar>
+            <view class="weui-tab">
+                <view class="weui-navbar" >
+                    <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+                </view>
+                <view class="weui-tab__panel" >
+                    <view class="weui-tab__content" hidden="{{activeIndex != 0}}"><br><infolist1 style="margin-top:100rpx" :classify.sync="classify1" :fid.sync="fid" ></infolist1></view>
+                    <view class="weui-tab__content" hidden="{{activeIndex != 1}}"><br><infolist2 :classify.sync="classify2" :fid.sync="fid" ></infolist2></view>
+                    <view class="weui-tab__content" hidden="{{activeIndex != 2}}"><br><infolist3 :classify.sync="classify3" :fid.sync="fid" ></infolist3></view>
+                    
+                </view>
+            </view>
+        </view>
+    </view>
+     <view class="publisher-btn" wx:if="{{role>0?true:false}}" id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click">
+      <image id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click" src="../assets/images/feather.png"></image></view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import {subject} from '../data/data'
+    import infolist from '../components/infolist'
+    import searchbar from '../components/searchbar'
+
+    const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+
+    export default class Toast extends wepy.page {
+
+        config={
+            navigationBarTitleText:'互动交流'
+        }
+        data = {
+            tabs: ['学术杂论', '合作需求', '问题求助'],
+            activeIndex: 0,
+            sliderOffset: 0,
+            sliderLeft: 0,
+            fid:'1',
+            classify1:'学术杂论',
+            classify2:'合作需求',
+            classify3:'问题求助',
+            role:Number,
+            category:'',
+            
+
+        }
+       components={
+        
+          infolist1:infolist,
+          infolist2:infolist,
+          infolist3:infolist,
+          
+          
+          searchbar:searchbar
+       }
+        methods = {
+            tabClick (e) {
+                this.sliderOffset = e.currentTarget.offsetLeft;
+                this.activeIndex = e.currentTarget.id;
+            },
+            click(e){
+                console.log(e.target.id);
+                console.log(e);
+                wx.navigateTo({url:'publish?fid='+e.target.id+'&category='+this.category})
+            }
+            
+        }
+
+        async onLoad () {
+            let res = await wepy.getSystemInfo();
+             /*this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
+            this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;*/
+            this.role=this.$parent.globalData.userinfo.role
+            console.log(subject)
+        }
+    }
+</script>

@@ -1,0 +1,7 @@
+@import "./../components/news.wxss";
+@import "./../components/subnav.wxss";
+@import "./../components/nav.wxss";
+.img {
+  width: 100%;
+  height: 50px;
+}

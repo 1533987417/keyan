@@ -1,0 +1,56 @@
+@import "./../components/placeholder.wxss";
+@import "./../components/resultlist.wxss";
+@import "./../components/filter_bar.wxss";
+@import "./../components/search.wxss";
+.history {
+  padding: 20px 27px;
+}
+.doc {
+  color: #999;
+  font-size: 26rpx;
+}
+.lable {
+  margin-top: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: -20rpx;
+}
+.lable .child {
+  background: #dedede;
+  padding: 10rpx 20rpx;
+  border-radius: 300rpx;
+  margin-left: 20rpx;
+  font-size: 26rpx;
+  margin-top: 5rpx;
+  color: #000;
+}
+.btn_box {
+  width: 377rpx;
+  margin: 0 auto;
+  padding-top: 88rpx;
+}
+.btn_box .button {
+  color: #999;
+}
+.active {
+  border: 1px solid #f23737;
+  color: #f23737;
+}
+.position1 {
+  position: fixed;
+  top: 0rpx;
+  background-color: #F8F8F8FF;
+  z-index: 2;
+  width: 100%;
+}
+.position2 {
+  position: fixed;
+  top: 92rpx;
+  z-index: 2;
+  background-color: #F8F8F8FF;
+  width: 100%;
+}
+.resultlist {
+  margin-top: 150rpx;
+}

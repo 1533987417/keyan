@@ -1,0 +1,70 @@
+
+  <view class="container">
+    
+   <view class="position1 "> 
+  <view  wx:if="{{$search$show==1}}" class="content">
+    <view class="search">
+      <view class="serch_content">
+        <i class="iconfont icon-search"/>
+        <input type="text" name="search_input" bindinput="$search$searchInput" class="search_input" focus="true" value="{{$search$search_input_value}}" confirm-type="search" placeholder="关键字搜索"/>
+        <i><icon wx:if="{{$search$search_input_value!=''}}" bindtap="$search$delText" type="cancel" size="20"/></i>
+      </view>
+      <button class="btn btn_cancel" bindtap="$search$goBack" wx:if="{{$search$search_input_value==''}}" data-wpygoback-a="">取消</button>
+      <button class="btn btn_search" bindtap="$search$search" wx:else data-wpysearch-a="">搜索</button>
+    </view>
+  </view>
+</view>
+   <view class="position2"> 
+  <view class="bar" wx:if="true">
+    <view class="filter">
+      <view class="nav {{$filterBar$currentType=='1' ? 'nav_active' : ''}}" data-current="1" bindtap="$filterBar$orderBy">标题</view>
+      <view class="nav  {{$filterBar$currentType=='0' ? 'nav_active' : ''}}" data-current="0" bindtap="$filterBar$orderBy">发帖人</view>
+     
+      </view>
+      
+    </view>
+    
+    
+  
+</view>
+  
+    <view  wx:if="{{list.length>0}}">
+      <!--矩阵商品列表模块-->
+     <view class="resultlist"> 
+
+<scroll-view scroll-y style="height:auto;margin-left:5px;margin-right:5px;">
+<block  wx:for="{{$resultlist$info}}" wx:key="rowId">
+<navigator url="./article?tid={{item[1]}}" open-type="navigate">
+      <view class="swiper-item">{{item[4]}}</view>
+    <view class="sub_swiper-item">浏览：{{item[10]}}|回复：{{item[11]}} </view>
+    <view class="sub_swiper-item">{{item[2]}}|{{item[12]}}|{{item[5]}}</view>
+    <view class="fenge"/>
+  </navigator>  
+</block>
+  
+ <view hidden="{{!$resultlist$empty$isNone}}" class="weui-loadmore weui-loadmore_line">
+  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+</view>
+<view hidden="{{$resultlist$empty$isNone}}" class="weui-loadmore">
+  <view class="weui-loading"/>
+  <view class="weui-loadmore__tips">正在加载</view>
+</view>
+            
+
+</scroll-view>
+
+</view>
+      
+      
+
+    </view>
+    <view  wx:else>
+    
+    <view class="empty-placeholder row-center"  wx:if="{{$placeholder$show}}">
+        
+        <view class="txt">{{$placeholder$message}}</view>
+    </view>
+
+   </view>
+    
+  </view>

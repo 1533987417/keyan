@@ -1,0 +1,56 @@
+
+    <view class="navbar page">
+        <view class="page__bd">
+            
+            <view class="weui-tab">
+                <view class="weui-navbar bar">
+                    <view  wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"/>
+                
+                </view>
+            </view>
+            <view class="weui-tab__panel">
+                    <view class="weui-tab__content" hidden="{{activeIndex != 0}}"><br/>
+<view class="weui-cells weui-cells_after-title">
+  <scroll-view scroll-y style="height:auto">
+             <block  wx:for="{{$schoollist$school}}" wx:key="{{index}}">
+                <view bindtap="$schoollist$load" id="{{item}}" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">{{item}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"/>
+                </view>
+                
+            </block></scroll-view>
+            </view>
+</view>
+                    <view class="weui-tab__content" hidden="{{activeIndex != 1}}"><br/>
+<view class="weui-cells weui-cells_after-title">
+  <view  wx:if="{{$teacherlist$teacher.length>0}}">
+    <block wx:for="{{$teacherlist$teacher}}" wx:key="{{index}}">
+      <navigator url="../pages/detail?gzh={{item[0]}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+          <image src="{{$teacherlist$url}}{{item[3]}}" style="margin-right: 5px;vertical-align: middle;width:50px; height: 50px;"/>
+        </view>
+        <view class="weui-cell__bd">{{item[1]}} {{item[2]}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+      </navigator>
+
+    </block>
+              
+</view>
+
+<view  wx:else>
+  <view style="font-size:20px;height:800rpx;padding-top:200px">
+
+    <view class="empty-placeholder row-center"  wx:if="{{$teacherlist$placeholder$show}}">
+        
+        <view class="txt">{{$teacherlist$placeholder$message}}</view>
+    </view>
+</view>
+</view></view>
+</view>
+                    
+            </view>
+        </view>
+    </view>

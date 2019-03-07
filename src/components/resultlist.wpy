@@ -1,0 +1,76 @@
+
+<template>
+
+<scroll-view scroll-y style="height:auto;margin-left:5px;margin-right:5px;">
+<block wx:for="{{info}}" wx:key="rowId">
+<navigator url="./article?tid={{item[1]}}" open-type="navigate">
+      <view class="swiper-item">{{item[4]}}</view>
+    <view class="sub_swiper-item">浏览：{{item[10]}}|回复：{{item[11]}} </view>
+    <view class="sub_swiper-item">{{item[2]}}|{{item[12]}}|{{item[5]}}</view>
+    <view class="fenge"></view>
+  </navigator>  
+</block>
+  <empty :isNone.sync="isNone"></empty>
+</scroll-view>
+
+</template>
+
+<script>
+import wepy from 'wepy';
+import newslist from '../data/data';
+import empty from '../components/empty'
+export default class infolist extends wepy.component {
+          
+          props={
+            info:[],
+            isNone:Boolean,
+            
+          }
+          components={
+            empty:empty
+  
+          }
+          methods={
+          
+          }
+          onLoad(){
+            console.log(this.info)
+          }
+        }
+
+    </script>
+<style lang="less">
+.swiper_container{
+  height:1000rpx;
+  width:100vw;
+  margin-top:0rpx;
+  margin-left:2px;
+}
+.swiper-item{
+  color:#0032FF;
+  font-size:15px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  letter-spacing:2px;
+
+  
+}
+.sub_swiper-item{
+  color:#A69D86;
+  font-size:14px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  letter-spacing:2px;
+  text-align:left;
+  
+}
+.fenge{
+    height: 1px;
+  width: 100%;
+  background-color:#DCDCDC;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  }
+</style>

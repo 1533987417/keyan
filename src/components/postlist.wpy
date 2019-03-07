@@ -1,0 +1,273 @@
+<template>
+ <view class="page" style="margin-left:5px;margin-right:5px">
+      
+           
+
+
+
+ <scroll-view scroll-y style="height:auto;margin-bottom:50px;margin-right:5px">
+            <view class="weui-panel weui-panel_access">
+                <view class="weui-panel__hd" style="font-size:{{font.body}}px">全部回复</view>
+                <view class="weui-panel__bd">
+                <block  wx:for="{{postlist}}" wx:key="{{item[0]}}" >
+               
+                <view class="weui-cell">
+                    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                        <image src="../images/touxiang.png" class="img"/>
+                        
+                    </view>
+                    <view class="weui-cell__bd" style="font-size:{{font.body}}px">
+                        <navigator url="detail?gzh={{item[5]}}" open-type="navigate"><view>{{item[4]}}</view></navigator>
+                        <view style="font-size: {{font.subtitle}}px;color: #888888;">第{{item[3]+1}}楼 | {{item[7]}} | {{item[11]}}</view>
+                    </view>
+                    <view >
+                      <image id="{{item[0]}}" wx:if="{{item[5]==gzh}}" src="../images/icon_nav_nav.png" class="imgaction" @tap="open"></image>
+                      <block wx:elif="{{role==2}}">
+                       <image id="{{item[0]}}" wx:if="{{item[10]==dbmm}}" src="../images/icon_nav_nav.png" class="imgaction" @tap="open"></image>
+                     </block>
+                     <block wx:elif="{{role==3}}">
+                       <image id="{{item[0]}}"  src="../images/icon_nav_nav.png" class="imgaction" @tap="open"></image>
+                     </block>
+                     
+                    </view>
+                </view>
+                 <view class="textbody" style="font-size:{{font.body}}px"><wxparser rich-text="{{item[8]}}"></wxparser></view>
+                 
+               </block>
+                </view>
+               <empty :isNone.sync="isNone"></empty>
+              
+            </view>
+            
+  </scroll-view>
+  <form bindsubmit="submit" bindreset="formReset">
+    <view class="weui-cells weui-cells_after-title" style="position:fixed;bottom:0px;width:100%;height:50px">
+      <view class="weui-cell weui-cell_input">
+
+        <view class="weui-cell__bd">
+          <input bindfocus="focus" value="{{text}}" name="text" class="weui-input" confirm-type="send" placeholder="说说你的看法" bindconfirm="send"></input>
+        </view>
+        <view class="weui-cell__ft">
+          <button disabled="{{disclick}}" class="weui-vcode-btn" style=" border-color: #FFFFFF;height:50px;background-color:#FFFFFF;margin-right: -15px;" formType="submit" >发表</button>
+
+        </view>
+
+      </view>
+    </view> </form>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import tip from '../pages/js/tip'
+    import empty from '../components/empty'
+    import config from '../pages/js/config'
+    import {wxRequest} from '../pages/js/Request'
+    import db from '../pages/js/db'
+    import util from '../pages/js/util'
+
+    
+    export default class test extends wepy.component{
+        components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+         empty:empty
+        }
+        config={
+          enablePullDownRefresh: true,
+          "usingComponents":{
+              "wxparser":"plugin://wxparserPlugin/wxparser"
+            }
+        }
+        props={
+          tid:Number,
+          
+        }
+        
+         data={
+          
+          postlist:[],
+          gzh:Number,
+          dbmm:String,
+          role:Number,
+          PageIndex:0,
+          flag:true,
+          text:' ',
+          disclick:true,
+          isNone: false,
+          font:{
+          title:18,
+          subtitle:13,
+          body:15
+         },
+         bigfont:{
+          title:20,
+          subtitle:15,
+          body:18
+         }
+
+         }
+         computed = {
+            
+            
+      }
+        onLoad(){
+          if(this.$parent.$parent.globalData.bigfont)
+          {
+           this.font=this.bigfont;
+         }
+         console.log(this.$parent.$parent.globalData.bigfont)
+          this.gzh=this.$parent.$parent.globalData.userinfo.gzh;
+          this.dbmm=this.$parent.$parent.globalData.userinfo.dbmm;
+          this.role=this.$parent.$parent.globalData.userinfo.role;
+           
+          //console.log(this.$parent.$parent.globalData.personid);
+         
+
+        }
+        //////判断权限
+        
+        async getmore(falg2=true){
+          if(this.flag){
+          let that=this;
+          console.log(falg2);
+          if(falg2){
+          this.PageIndex=this.PageIndex+1;}
+          
+          let res=await wxRequest('get',config.service.pagePost+'?tid='+that.tid+'&PageIndex='+that.PageIndex)
+          if(res.length<8){
+                that.flag=false;
+                that.isNone=true;
+              }
+              var x;
+              for(x in res){
+                res[x][7]=res[x][7].slice(0,10);
+                res[x][10]=util.trim(res[x][10])
+              }
+              this.postlist=this.postlist.concat(res);
+              console.log(res)
+              this.$apply();
+
+           }
+        }
+
+        
+        onShow(){
+            
+            this.getmore();
+            
+          }
+
+       
+        methods={
+
+            
+            async open (e) {
+                var that=this;
+                let res = await wepy.showActionSheet({
+                    itemList: ['删除']
+                });
+             
+                if (!res.cancel) {
+                    
+                    let resp=await wxRequest('get',config.service.postdelete+'?pid='+e.currentTarget.id+'&tid='+that.$parent.article.tid+'&fid='+that.$parent.article.fid);
+                      console.log(resp);
+                      if(resp==1){
+                        tip.success('删除成功');
+                        that.postlist=[];
+                        that.PageIndex=0;
+                        that.flag=true;
+                        that.$apply();
+                        tip.toast('加载中',false,'loading');
+                        that.getmore();
+
+                      }
+                      else{
+                        tip.error('数据不存在')
+                      }
+
+                }
+
+
+            }, 
+            getmore(){
+                let that=this;
+                
+                if(this.flag){
+                  
+                  that.getmore();
+                }
+                
+          
+              },
+            focus(){
+              this.disclick=false;
+              this.$apply();
+            },
+            
+            submit(e){
+              this.text='';
+              this.$apply();
+              let that=this;
+              if(e.detail.value.text!=''){
+              console.log(e.detail.value.text);
+              wepy.request({url:config.service.addpost,
+                           data:{fid: that.$parent.article.fid,tid:  that.$parent.article.tid,
+                                posterid:that.$parent.$parent.globalData.userinfo.gzh,
+                                 poster:that.$parent.$parent.globalData.userinfo.xm,
+                                 title: that.$parent.article.title ,
+                                 message: e.detail.value.text,
+                                 ip:that.$parent.$parent.globalData.ip,
+                                 bmdm:that.$parent.$parent.globalData.userinfo.bmdm,
+                                 bmmc:that.$parent.$parent.globalData.userinfo.bmmc,
+                                 role:that.$parent.$parent.globalData.userinfo.role                       } ,
+                                 method:'post',
+                                 header: {
+                                  'Authorization': db.Get('token')
+                                }
+                               }).then((d)=>{
+                // console.log(this.$parent.$parent.globalData.userinfo);
+                if(d.data==1){
+                  tip.success('发送成功');
+                  wepy.request({url:config.service.oneMore+'?tid='+that.tid,header: {
+                    'Authorization': db.Get('token')
+                  }}).then((d)=>{
+                      d.data[0][7]=d.data[0][7].slice(0,10);
+                      that.postlist=that.postlist.concat(d.data);
+                      that.$apply();
+
+                  }) }
+                 })
+              }
+              
+              }
+          }
+
+    }
+</script>
+<style type="less">
+  .weui-cell__bd{
+    text-align: left;
+    width:100%;
+    margin-top:5px;
+  }
+  .img{
+    border-radius: 30px;
+    width: 45px; height: 45px; display: block;
+  }
+  .textbody{
+    margin-left: 55px;
+    margin-right: 2px;
+    font-size: 15px;
+  }
+  .imgaction{
+    width: 25px;
+    height:25px;
+    display: block;
+  }
+  .btn{
+    border-color: #FFFFFF;
+    height:50px;
+    background-color:#FFFFFF;
+    margin-right: -15px;
+  }
+
+</style>

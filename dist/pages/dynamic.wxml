@@ -1,0 +1,59 @@
+
+    
+    <view style="transition:margin-top 1s;margin-top:{{$searchbar$height}}rpx">
+        
+        
+            <navigator url="/pages/searchresult?fid={{$searchbar$fid}}">
+            <view class="weui-search-bar">
+                <view class="weui-search-bar__form">
+                    <view class="weui-search-bar__box">
+                        <icon class="weui-icon-search_in-box" type="search" size="14"/>
+                        <input type="text" class="weui-search-bar__input" placeholder="搜索{{$searchbar$fid}}" value="{{$searchbar$inputVal}}"/>
+                        <view class="weui-icon-clear"  wx:if="{{$searchbar$inputVal.length > 0}}" bindtap="$searchbar$clearInput">
+                            <icon type="clear" size="14"/>
+                        </view>
+                    </view>
+                    <label class="weui-search-bar__label">
+                        <icon class="weui-icon-search" type="search" size="14"/>
+                        <view class="weui-search-bar__text">关键字搜索</view>
+                       
+                    </label>
+                </view>
+            </view>
+            </navigator>
+            
+            
+        
+    </view>
+
+    
+
+    
+ <scroll-view scroll-y style="height:1000rpx" bindscrolltolower="$infolist$lower" scroll-with-animation="true" bindscroll="$infolist$bindscroll" class="list">
+<block  wx:for="{{$infolist$info}}" wx:key="rowId">
+<navigator url="article?tid={{item[1]}}" open-type="navigate">
+      <view class="swiper-item">{{item[4]}}</view>
+      <view style="display:flex">
+    <view class="sub_swiper-item weui-cell__hd">来源：{{item[2]}}|{{item[5]}}</view>
+    <view class="weui-cell__bd">
+    <image src="../images/browse.png" class="imgaction"/><text class="sub_swiper-item">{{item[10]}}</text>
+    <image src="../images/edit.png" class="imgaction"/><text class="sub_swiper-item">{{item[11]}}</text>
+  </view>
+  </view>
+    <view class="fenge"/>
+  </navigator>  
+</block>
+ 
+ <view hidden="{{!$infolist$empty$isNone}}" class="weui-loadmore weui-loadmore_line">
+  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+</view>
+<view hidden="{{$infolist$empty$isNone}}" class="weui-loadmore">
+  <view class="weui-loading"/>
+  <view class="weui-loadmore__tips">正在加载</view>
+</view>
+            
+
+</scroll-view> 
+
+    
+     <view class="publisher-btn"  wx:if="{{role>1?true:false}}" id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click"><image id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click" src="../assets/images/feather.png"/></view>

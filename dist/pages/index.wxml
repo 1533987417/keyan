@@ -1,0 +1,114 @@
+
+  <view class="container">
+    <image src="../images/D469565680002F8A1715894B2A120B48.png" class="img"/>
+    
+
+<view class="container1">
+        <view class="nav_list">
+      <navigator open-type="navigate" url="/pages/advice">
+        <image src="../images/213424.png" class="nav_icon"/>
+        <view class="nav_text1">意见建议</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/banshi">
+        <image src="../images/wuli.png" class="nav_icon"/>
+        <view class="nav_text1">办事指南</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/t">
+        <image src="../images/settings-selected.png" class="nav_icon"/>
+        <view class="nav_text1">系统设置</view>
+      </navigator>
+      <view bindtap="$nav$click">
+        <image src="../images/caozuo.png" class="nav_icon"/>
+        <view class="nav_text1">操作指南</view>
+      </view>
+    </view>
+</view>
+
+    
+
+<view class="container1">
+        <view class="nav_list1">
+          <view class="nav1">
+        <navigator open-type="navigate" url="/pages/zcinfo">
+        <image src="../images/electronics.png" class="nav_icon"/>
+        <view class="nav_text">科研政策</view>
+          </navigator>
+         </view>
+         <view class="nav2">
+          <navigator open-type="navigate" url="/pages/teacherinfo">
+        <image src="../images/supplier-features.png" class="nav_icon"/>
+        <view class="nav_text">教师科研</view>
+          </navigator>
+         </view>
+         <view class="nav3">
+          <navigator open-type="navigate" url="/pages/require">
+        <image src="../images/trust.png" class="nav_icon"/>
+        <view class="nav_text">地方需求</view>
+          </navigator>
+        </view>
+</view>
+         <view class="nav_list1">
+          <view class="nav4">
+          <navigator open-type="navigate" url="/pages/Topten">
+        <image src="../images/hot.png" class="nav_icon"/>
+        <view class="nav_text">热帖榜</view>
+          </navigator>
+         </view>
+         <view class="nav4">
+          <navigator open-type="navigate" url="/pages/inform">
+        <image src="../images/remind.png" class="nav_icon"/>
+        <view class="nav_text">科研通知</view>
+          </navigator>
+         </view>
+         <view class="nav4" style="margin-right:2px">
+          <navigator open-type="navigate" url="/pages/dynamic">
+        <image src="../images/rejected-order.png" class="nav_icon"/>
+        <view class="nav_text">科研动态</view>
+          </navigator>
+        </view>
+   </view>
+   <view class="nav_list1">
+          <view class="nav5">
+          <navigator open-type="navigate" url="/pages/interaction">
+        <image src="../images/comments.png" class="nav_icon"/>
+        <view class="nav_text">互动交流</view>
+          </navigator>
+         </view>
+         <view class="nav2" style="background-color:#43C424">
+          <navigator open-type="navigate" url="/pages/report">
+        <image src="../images/RFQ.png" class="nav_icon"/>
+        <view class="nav_text">学术报告</view>
+          </navigator>
+         </view>
+         <view class="nav6">
+          <navigator open-type="navigate" url="/pages/settings">
+        <image src="../images/account.png" class="nav_icon"/>
+        <view class="nav_text">个人中心</view>
+          </navigator>
+        </view>
+   </view>
+ </view>
+   
+
+
+
+
+
+    
+<view style="background-color:#FFFFFF;border-radius:2px;">
+<view style="background-color:#F2F2F2"><text>校内通知</text></view>
+<swiper class="swiper_container" vertical="true" autoplay="true" circular="true" interval="2000" display-multiple-items="4">
+<block  wx:for="{{$news$news}}" wx:key="rowId">
+<navigator url="./web?url={{item.url}}" open-type="navigate">
+  <swiper-item style="margin-left:5px">
+    <view class="swiper-item">{{item.title}}</view>
+    <view class="sub_swiper-item">时间：{{item.date}}</view>
+    <view class="fenge"/>
+  </swiper-item>
+</navigator>  
+</block>
+       
+</swiper>
+</view>
+
+  </view>

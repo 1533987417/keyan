@@ -1,0 +1,18 @@
+@import "./../components/teacherlist.wxss";
+@import "./../components/schoollist.wxss";
+.navbar .page,
+.navbar .page__bd {
+  height: 100%;
+}
+.navbar .page__bd {
+  padding-bottom: 0;
+}
+.navbar .weui-tab__content {
+  padding-top: 0px;
+  text-align: center;
+}
+.navbar .bar {
+  position: fixed;
+  background-color: #F8F8F8FF;
+  opacity: 1;
+}

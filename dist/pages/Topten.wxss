@@ -1,0 +1,35 @@
+.swiper-item._9c6c954 {
+  color: #000000FF;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 2px;
+  text-align: left;
+  margin-left: 12px;
+}
+.sub_swiper-item._9c6c954 {
+  color: #A69D86;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 2px;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 4px;
+}
+.fenge._9c6c954 {
+  height: 1px;
+  width: 100%;
+  background-color: #DCDCDC;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+.imgaction._9c6c954 {
+  width: 12px;
+  height: 12px;
+  margin-left: 2px;
+  float: center;
+  margin-top: 4px;
+}

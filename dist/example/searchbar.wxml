@@ -1,0 +1,25 @@
+
+    <view class="page">
+        
+        <view class="page__bd">
+            <navigator url="/pages/searchresult">
+            <view class="weui-search-bar">
+                <view class="weui-search-bar__form">
+                    <view class="weui-search-bar__box">
+                        <icon class="weui-icon-search_in-box" type="search" size="14"/>
+                        <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}"/>
+                        <view class="weui-icon-clear"  wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                            <icon type="clear" size="14"/>
+                        </view>
+                    </view>
+                    <label class="weui-search-bar__label">
+                        <icon class="weui-icon-search" type="search" size="14"/>
+                        <view class="weui-search-bar__text">搜索</view>
+                    </label>
+                </view>
+            </view>
+            </navigator>
+            
+            
+        </view>
+    </view>

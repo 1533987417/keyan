@@ -1,0 +1,38 @@
+.container {
+  background-color: #F2F2F2;
+}
+.subcontainer {
+  width: 100%;
+  margin: 3px auto;
+  height: 150vw;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  border: 1px solid #EFEFEF ;
+}
+.line {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+.head {
+  margin-left: 10px;
+  float: left;
+}
+.text {
+  position: absolute;
+  right: 5px;
+  width: 60%;
+  border: 1px solid #EFEFEF;
+  color: #939393FF;
+  font-weight: 550;
+}
+#text1 {
+  display: block;
+  width: 70%;
+  border: 1px solid #EFEFEF;
+  color: #939393FF;
+  font-weight: 550;
+  height: 250rpx;
+  margin-right: 5px;
+  margin-left: 5px;
+}

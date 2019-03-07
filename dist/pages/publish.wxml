@@ -1,0 +1,28 @@
+
+<view style="margin-left:5px">
+<form bindsubmit="formSubmit">
+    
+   <picker name="type" bindchange="bindPickerChange" value="{{array[index]}}" range="{{array}}">
+    <view class="picker">
+      <text>类型：</text>{{array[index]}}
+    </view> 
+  </picker>
+  <view class="fenge"/>
+  <view  wx:if="{{havasub}}">
+  <picker name="typesub" bindchange="bindPickerChangesub" value="{{subject[indexsub]}}" range="{{subject}}">
+    <view class="picker">
+      <text>学科：</text>{{subject[indexsub]}}
+    </view> 
+  </picker>
+     <view class="fenge"/></view>
+<view class="picker"><text>标题：</text><input name="title"/></view>
+<view class="fenge"/>
+
+内容:<textarea name="body" style="width:100vw;height:600rpx" maxlength="-1" splaceholder="填写内容。。"/>
+<text style="color:#FF0011;font-size:12px">*请发布与科研有关的内容</text>
+
+<button style="position:fixed;bottom:2px;width:100vw" type="default" formType="submit">发布</button>
+</form>
+
+
+</view>

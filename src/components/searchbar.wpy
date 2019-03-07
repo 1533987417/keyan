@@ -1,0 +1,67 @@
+<style lang="less">
+.searchbar-result{
+    margin-top: 0;
+    font-size: 14px;
+}
+.searchbar-result:before{
+    display: none;
+    float:center;
+}
+.weui-cell{
+    padding: 12px 15px 12px 35px;
+}
+.search{
+    margin-top:50rpx
+}
+</style>
+<template>
+    <view style="transition:margin-top 1s;margin-top:{{height}}rpx">
+        
+        
+            <navigator url="/pages/searchresult?fid={{fid}}">
+            <view class="weui-search-bar">
+                <view class="weui-search-bar__form">
+                    <view class="weui-search-bar__box">
+                        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                        <input type="text" class="weui-search-bar__input" placeholder="搜索{{fid}}" value="{{inputVal}}"  />
+                        <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                            <icon type="clear" size="14"></icon>
+                        </view>
+                    </view>
+                    <label class="weui-search-bar__label">
+                        <icon class="weui-icon-search" type="search" size="14"></icon>
+                        <view class="weui-search-bar__text">关键字搜索</view>
+                       
+                    </label>
+                </view>
+            </view>
+            </navigator>
+            
+            
+        
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+
+    export default class Searchbar extends wepy.component {
+
+        data = {
+            height:0
+        };
+        props={
+          fid: String
+        }
+        methods = {
+            disappear(){
+                this.height=-96
+                this.$apply()
+            },
+            appear(){
+                this.height=0
+                this.$apply()
+            }
+        }
+    }
+</script>

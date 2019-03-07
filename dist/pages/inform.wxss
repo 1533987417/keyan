@@ -1,0 +1,30 @@
+@import "./../components/searchbar.wxss";
+@import "./../components/newlist.wxss";
+@import "./../components/infolist.wxss";
+.page__bd {
+  height: 100%;
+}
+.page__bd {
+  padding-bottom: 0;
+}
+.weui-tab__content {
+  padding-top: 0px;
+  text-align: center;
+}
+.publisher-btn {
+  width: 50px;
+  height: 50px;
+  background-color: #00E003;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -1px 2px 9px 0px #b0b0b0;
+}
+image {
+  width: 60rpx;
+  height: 60rpx;
+}

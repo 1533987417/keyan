@@ -1,0 +1,74 @@
+
+  <view style="background-color:#F2F2F2;margin:0 2px;">
+   <swiper class="swiper" indicator-active-color="{{indicatorActiveColor}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">
+    <block  wx:for="{{imgUrls}}" wx:key="">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="355" height="150"/>
+    </swiper-item>
+    </block>
+    </swiper>
+
+   
+
+<view class="container1">
+       
+    <view class="nav_list1">
+      <navigator open-type="navigate" url="/pages/zcinfo">
+        <image src="../images/i11.png" class="nav_icon"/>
+        <view class="nav_text">科研政策</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/teacherinfo">
+        <image src="../images/i06.png" class="nav_icon"/>
+        <view class="nav_text">教师科研</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/require">
+        <image src="../images/i04.png" class="nav_icon"/>
+        <view class="nav_text">地方需求</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/inform">
+        <image src="../images/i09.png" class="nav_icon"/>
+        <view class="nav_text">科研通知</view>
+      </navigator>
+    </view>
+    
+     <view class="nav_list1">
+      <navigator open-type="navigate" url="/pages/interaction">
+        <image src="../images/i03.png" class="nav_icon"/>
+        <view class="nav_text1">互动交流</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/dynamic">
+        <image src="../images/icon_1.png" class="nav_icon"/>
+        <view class="nav_text1">科研动态</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/share">
+        <image src="../images/i10.png" class="nav_icon"/>
+        <view class="nav_text1">资源共享</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/report">
+        <image src="../images/icon_25.png" class="nav_icon"/>
+        <view class="nav_text1">学术报告</view>
+      </navigator>
+    </view>
+</view>
+
+
+    
+<view style="background-color:#FFFFFF;border-radius:2px;">
+<view style="background-color:#F2F2F2"><text>校内通知</text></view>
+<swiper class="swiper_container" vertical="true" autoplay="true" circular="true" interval="2000" display-multiple-items="4">
+<block  wx:for="{{$news$news}}" wx:key="rowId">
+<navigator url="./web?url={{item.url}}" open-type="navigate">
+  <swiper-item style="margin-left:5px">
+    <view class="swiper-item">{{item.title}}</view>
+    <view class="sub_swiper-item">时间：{{item.date}}</view>
+    <view class="fenge"/>
+  </swiper-item>
+</navigator>  
+</block>
+       
+</swiper>
+</view>
+
+     
+
+  </view>

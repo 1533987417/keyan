@@ -1,0 +1,108 @@
+<template>
+<view class="container">
+  <view class="subcontainer">
+     <view class="line"><span class="head">研究方向：</span><input type="text" class="text" value="{{user[0][36]}}"></input></view>
+     <view class="line"><span class="head">学历/学位：</span><input type="text" class="text" value="{{user[0][8]}}/{{user[0][9]}}"></input></view>
+     <view class="line"><span class="head">学科：</span><input type="text" class="text" 
+      value="{{user[0][21]}}"></input></view>
+     <view class="line"><span class="head">职称：</span><input type="text" class="text"
+      value="{{user[0][6]}}"></input></view>
+     <view class="line"><span class="head">EMAIL：</span><input type="text" class="text"
+      value="{{user[0][33]}}"></input></view>
+     <view class="line"><span class="head">办公电话：</span><input type="text" class="text" value="{{user[0][34]}}"></input></view>
+     <view class="line"><span class="head">手机：</span><input type="text" class="text"
+      value="{{user[0][35]}}"></input></view>
+     <view class="line"><span class="head">QQ：</span><input type="text" class="text"
+      value="{{user[0][37]}}"></input></view>
+     <view class="line"><span class="head">个人简介：</span><textarea id="text1" cols="" rows="" value="{{user[0][38]}}"></textarea></view>
+    
+
+
+
+ 
+
+  </view>
+
+</view>
+</template>
+<script>
+    import wepy from 'wepy'
+    
+    
+    export default class test extends wepy.component{
+        components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+       
+        }
+        props={
+          user:[]
+        }
+        config = {
+            
+         }
+        data={
+          gzh:String
+        }
+        onLoad(){
+          this.gzh=this.$parent.$parent.globalData.userinfo.gzh;
+           
+        }
+        onShow(){
+          
+          
+        }
+
+        methods={
+            
+            }
+
+    }
+</script>
+<style type="less">
+.container{
+  background-color: #F2F2F2;
+}
+.subcontainer{
+  width: 100%;
+  margin:3px auto;
+  height: 150vw;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  border: 1px solid #EFEFEF ;
+}
+.line{
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+
+}
+.head{
+  margin-left: 10px;
+ 
+  float: left;
+}
+.text{
+  position: absolute;
+
+  right:5px;
+  width: 60%;
+  border: 1px solid #EFEFEF;
+  color: #939393FF;
+  font-weight: 550;
+  
+  
+  
+}
+#text1{
+  display:block;
+  width: 70%;
+  border: 1px solid #EFEFEF;
+  color: #939393FF;
+  font-weight: 550;
+  height: 250rpx;
+  margin-right:5px;
+  margin-left: 5px;
+}
+
+
+</style>

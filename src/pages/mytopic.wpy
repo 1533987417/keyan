@@ -1,0 +1,207 @@
+
+
+<template>
+
+ 
+  <scroll-view scroll-y style="height:auto;margin-bottom:50px">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd" >全部主题 共{{count}}条</view>
+      <view class="weui-panel__bd">
+        <block  wx:for="{{topiclist}}" wx:key="{{item[0]}}" >
+         
+          <view class="weui-cell">
+            
+            <view class="weui-cell__bd">
+             <navigator url="article?tid={{item[2]}}" open-type="navigate">
+              <view class="swiper-item" >{{item[5]}}</view>
+            </navigator>
+            <view style="font-size: 12px;color: #888888;">{{item[13]}} |{{item[14]}} | {{item[6]}}</view>
+
+          </view>
+          <view >
+            <image data-tid="{{item[2]}}" data-fid="{{item[1]}}" src="../images/icon_nav_nav.png" class="imgaction" @tap="open"></image>
+          </view>
+        </view>
+        
+        
+      </block>
+      
+      <view hidden="{{!flag}}" class="weui-loadmore">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
+      </view>   
+      <view hidden="{{flag}}" class="weui-loadmore weui-loadmore_line">
+
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+      </view>
+    </view>
+    
+  </view>
+  
+</scroll-view>
+
+
+
+
+
+
+
+
+</template>
+<script>
+import wepy from 'wepy'
+import config from '../pages/js/config'
+import tip from '../pages/js/tip'
+import {wxRequest} from '../pages/js/Request'
+
+
+
+export default class test extends wepy.page {
+  components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+            
+            
+          }
+          config = {
+            "navigationBarBackgroundColor":"#fcfcfc",
+            "navigationBarTitleText":"我的主题",
+            
+          }
+          data={
+           flag:true,
+           topiclist:[],
+           PageIndex:0,
+           count:Number
+         }
+         onLoad(){
+           this.getmore();
+
+         }
+         onReachBottom(){
+          console.log("到达底部");
+          this.getmore();
+
+        }
+        async onShow(){
+          let that=this;
+           
+           let res= await wxRequest('get',config.service.getMyCount+'?gzh='+that.$parent.globalData.userinfo.gzh)
+           that.count=res
+           that.$apply()
+
+         }
+         async getmore(falg2=true){
+          if(this.flag){
+            let that=this;
+            this.PageIndex=this.PageIndex+1;
+          
+            let res=await wxRequest('get',config.service.pageMyTopic+'?gzh='+that.$parent.globalData.userinfo.gzh+'&PageIndex='+that.PageIndex)
+            if(res.length==0){
+              that.flag=false
+              
+            }else if(res.length<10){
+              that.flag=false
+            }
+            var x
+            for(x in res){
+              res[x][6]=res[x][6].slice(0,10);
+            }
+            console.log(res)
+            this.topiclist=this.topiclist.concat(res);
+            this.$apply();
+
+          }
+        }
+        methods={
+          async open (e) {
+            var that=this;
+            let res = await wepy.showActionSheet({
+              itemList: ['删除']
+            });
+            
+            if (!res.cancel) {
+              wepy.showModal({
+                title: "是否删除该主题",
+                content: "若主题删除，有关评论将一并清空",
+                cancelText:"取消",
+                confirmText:"删除"
+              }).then((d)=>{
+                console.log(d)
+                if(d.confirm){
+                  console.log(e.currentTarget.dataset.fid)
+                  wxRequest('get',config.service.DeleteTopic+'?tid='+e.currentTarget.dataset.tid+'&fid='+e.currentTarget.dataset.fid).then((resp)=>{
+                    if(resp==1){
+                     tip.success('删除成功');
+                     that.topiclist=[];
+                     that.PageIndex=0;
+                     that.flag=true
+                          // that.$apply();
+                       //tip.toast('加载中',false,'loading');
+                       that.getmore();
+                       that.onShow();
+
+                     }
+
+                     else{
+                      tip.error('数据不存在');
+                    }
+                  })
+                  
+
+                  
+                }
+                
+
+              })
+              
+            }
+          }
+        }
+        
+
+      }
+      </script>
+      <style lang="less">
+      .imgaction{
+        width: 20px;
+        height: 20px;
+        display: block;
+      }
+      .fenge{
+        height: 1px;
+        width: 100%;
+        background-color:#DCDCDC;
+        margin-bottom: 10px;
+        margin-top: 5px;
+      }
+      .weui-cell__bd{
+        text-align: left;
+        width:80%;
+        margin-top:5px;
+      }
+      
+      .textbody{
+        margin-left: 55px;
+        margin-right: 2px;
+        font-size: 15px;
+      }
+      .imgaction{
+        width: 20px;
+        height: 20px;
+        display: block;
+        margin-right:5px;
+      }
+      .swiper-item{
+        color:#000000;
+        font-size:15px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        width: 100%;
+        white-space:nowrap;
+        letter-spacing:1px;
+
+        
+      }
+      </style>
+
+

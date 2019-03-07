@@ -1,0 +1,21 @@
+.nav_list {
+  border-radius: 12px;
+  color: #404040;
+  display: flex;
+  font-size: 26rpx;
+  justify-content: space-around;
+  background-color: #FFFAF0;
+  padding: 10rpx 30rpx;
+}
+.nav_list navigator {
+  text-align: center;
+}
+.nav_list .nav_icon {
+  height: 80rpx;
+  margin: 0 auto;
+  width: 80rpx;
+  margin-bottom: 14rpx;
+}
+.nav_list .nav_text1 {
+  font-size: 26rpx;
+}

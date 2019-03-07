@@ -1,0 +1,63 @@
+<template>
+<view class="weui-cells weui-cells_after-title">
+  <scroll-view scroll-y style="height:auto">
+             <block wx:for="{{school}}" wx:key="{{index}}">
+                <view @tap="load" id="{{item}}" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">{{item}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+                
+            </block></scroll-view>
+            </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import config from '../pages/js/config'
+    import tip from '../pages/js/tip'
+    import {wxRequest} from '../pages/js/Request'
+    
+    export default class test extends wepy.component{
+        components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+       
+        }
+        props={
+          school:[]
+        }
+        config = {
+            
+         }
+         data={}
+        async onLoad(){
+           /*tip.loading();
+           wepy.request(config.service.getColleges).then((d=>{
+               this.school=d.data;
+               console.log(d.data);
+               this.$apply();
+           }));
+           tip.loaded();*/
+           try{
+           console.log("我要看看")
+           let res=await wxRequest('get',config.service.getColleges);
+           this.school=res;
+           this.$apply();
+         }catch(error){
+          console.log('有错误'+error)
+         }
+
+        }
+        onShow(){}
+
+        methods={
+            load(e){
+              console.log(e);
+              console.log(e.currentTarget.id);
+              this.$emit("getColleges",e.currentTarget.id);
+              }
+            }
+
+    }
+</script>
+<style type="less">
+
+</style>

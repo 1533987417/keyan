@@ -1,0 +1,81 @@
+<template>
+<view class="weui-cells weui-cells_after-title">
+  <view wx:if="{{teacher.length>0}}">
+    <block wx:for="{{teacher}}" wx:key="{{index}}">
+      <navigator url="../pages/detail?gzh={{item[0]}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+          <image src="{{url}}{{item[3]}}" style="margin-right: 5px;vertical-align: middle;width:50px; height: 50px;"></image>
+        </view>
+        <view class="weui-cell__bd">{{item[1]}} {{item[2]}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </navigator>
+
+    </block>
+              
+</view>
+
+<view wx:else>
+  <view style="font-size:20px;height:800rpx;padding-top:200px">
+<placeholder ></placeholder></view>
+</view></view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import config from '../pages/js/config'
+    import placeholder from '../components/placeholder'
+    import {wxRequest} from '../pages/js/Request'
+    
+    export default class test extends wepy.component{
+        components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+            placeholder:placeholder
+        }
+        props={
+          teacher:[]
+        }
+        config = {
+            
+         }
+         data={
+          isNone:false,
+          url:config.service.img
+         }
+        onLoad(){
+
+        }
+        onShow(){
+
+         
+        }
+
+        methods={
+           /* getColleges(College){
+              /*console.log("有没有啊"+College);
+              let that=this;
+              wepy.request(config.service.GetCollegeMember+'?College='+College).then((d)=>{
+              console.log(d.data);
+              that.teacherlist=d.data;
+              
+              that.$apply();
+
+              })
+            }*/
+            async getColleges(College){
+              let that=this;
+              let res=await wxRequest('get',config.service.GetCollegeMember+'?College='+College)
+              that.teacherlist=res;
+              that.$apply();
+            }
+
+        }
+
+    }
+</script>
+<style type="less">
+  .weui-cell__bd{
+    text-align: left;
+    width:100%;
+    margin-top: 5px;
+
+  }
+</style>

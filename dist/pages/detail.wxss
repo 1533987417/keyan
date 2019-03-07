@@ -1,0 +1,3 @@
+@import "./../components/article.wxss";
+@import "./../components/teacherinfo.wxss";
+@import "./../components/tab.wxss";

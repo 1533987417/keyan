@@ -1,0 +1,85 @@
+
+  <view class="container _58f8431">
+    
+
+    <view class="panel _58f8431" style="background-image:url('{{icon8080}}')">
+      
+      <view class="zan-cell zan-cell--access user-info-cell _58f8431">
+        <view class="zan-cell__icon avatar-container _58f8431">
+          
+          <view class="avatar _58f8431"><open-data style="border-radius:30px;" type="userAvatarUrl" class="_58f8431"/></view>
+        </view>        
+        <view class="zan-cell__bd _58f8431">
+          
+          <view class="nickname _58f8431"><open-data type="userNickName" class="_58f8431"/></view>
+          <view class="location _58f8431">{{gzh}}</view>
+           
+        </view>
+        
+        <view class="zan-cell__bd _58f8431" style="margin-top:40px;margin-left:40px" bindtap="change">
+          <image class="img _58f8431" src="../images/lingdang.png"/>
+          <view class="text _58f8431" hidden="{{bigfont}}"> 开启大号字体</view>
+          <view class="text _58f8431" hidden="{{!bigfont}}"> 关闭大号字体</view>
+        </view>
+        
+      </view>
+    </view>
+    
+   <view class="page _58f8431">
+        
+  
+       <view class="page__desc _58f8431">个人功能</view>
+    
+        
+        
+        <view class="page__bd _58f8431">
+            <view class="weui-grids _58f8431">
+                
+                    <navigator url="./mytopic" class="weui-grid _58f8431" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon _58f8431" src="../images/213424.png"/>
+                        <view class="weui-grid__label _58f8431" style="font-size:12px">我的主题</view>
+                    </navigator>
+                
+                <navigator url="./myPosts" class="weui-grid _58f8431" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon _58f8431" src="../images/sdadas.png"/>
+                        <view class="weui-grid__label _58f8431">我的帖子</view>
+                    </navigator>
+                    <navigator url="./collegeTopics" class="weui-grid _58f8431" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon _58f8431" src="../images/yunaxi.png"/>
+                        <view class="weui-grid__label _58f8431">院系主题</view>
+                    </navigator>
+                    <navigator url="./bind" class="weui-grid _58f8431" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon _58f8431" src="../images/zhanghao.png"/>
+                        <view class="weui-grid__label _58f8431">账号绑定/解绑</view>
+                    </navigator>
+                    <navigator url="./advice" class="weui-grid _58f8431" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon _58f8431" src="../images/emoji-1.png"/>
+                        <view class="weui-grid__label _58f8431">意见建议</view>
+                    </navigator>
+                    <navigator url="./detail?gzh={{gzh}}" class="weui-grid _58f8431" hover-class="weui-grid_active">
+                        <image class="weui-grid__icon _58f8431" src="../images/People_72px_1095029_easyicon.net.png"/>
+                        <view class="weui-grid__label _58f8431">个人资料</view>
+                    </navigator>
+                    
+                    <view class="weui-grid _58f8431" hover-class="weui-grid_active">
+                         <button open-type="share" class="weui-grid1 _58f8431">
+                        <image class="weui-grid__icon _58f8431" src="../images/share_1099px_1202921_easyicon.net.png"/>
+                        <view class="weui-grid__label _58f8431">分享给好友</view>
+                      </button>
+                    </view>
+                    
+                    
+            </view>
+     
+    </view>
+    </view>
+    
+<view class="weui-footer _58f8431" style="margin-top:10px">
+    <view class="weui-footer__text _58f8431">版本：1.0</view>
+            </view>
+
+
+
+
+    
+  </view>

@@ -1,0 +1,80 @@
+<style lang="less">
+.publisher-btn{
+  width: 50px;
+  height: 50px;
+  background-color: #00E003;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -1px 2px 9px 0px rgba(176,176,176,1);
+
+   
+}
+image{
+    width: 60rpx;
+    height: 60rpx;
+  }
+</style>
+<template>
+    <searchbar :fid.sync="fid"></searchbar>
+    <view style="">
+    <infolist :classify.sync="classify" :fid.sync="fid" ></infolist>
+    </view>
+     <view class="publisher-btn" wx:if="{{role<4}}" id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click"><image id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click"  src="../assets/images/feather.png"></image></view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    
+    import infolist from '../components/infolist'
+    
+    
+    import searchbar from '../components/searchbar'
+
+    const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+
+    export default class Toast extends wepy.page {
+
+        config={
+            navigationBarTitleText:'意见建议'
+        }
+        data = {
+            classify:'',
+            fid:'44',
+            category:'意见建议',
+            role:Number
+            
+
+        }
+       components={
+        
+          infolist:infolist,
+          
+          
+          searchbar:searchbar
+       }
+        methods = {
+            tabClick (e) {
+                this.sliderOffset = e.currentTarget.offsetLeft;
+                this.activeIndex = e.currentTarget.id;
+            },
+            click(e){
+                console.log(e.target.id);
+                console.log(e);
+                wx.navigateTo({url:'publish?fid='+e.target.id+'&category='+this.category})
+            }
+        }
+
+        async onLoad () {
+            let res = await wepy.getSystemInfo();
+             /*this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
+            this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;*/
+            this.role=this.$parent.globalData.userinfo.role
+            console.log(this.role)
+        }
+    }
+</script>

@@ -1,0 +1,14 @@
+@import "./../components/news.wxss";
+@import "./../components/subnavtemp.wxss";
+.img {
+  width: 100%;
+  height: 50px;
+}
+.swiper {
+  height: 348rpx;
+}
+.slide-image {
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+}

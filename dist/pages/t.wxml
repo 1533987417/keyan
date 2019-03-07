@@ -1,0 +1,8 @@
+
+<view class="weui-cells__title _237fc0a">字体设置</view>
+            <view class="weui-cells weui-cells_after-title _237fc0a">
+                <view class="weui-cell _237fc0a">
+                    <view class="weui-cell__bd _237fc0a">大号字体</view>
+                    <view class="weui-cell__ft _237fc0a"><switch checked="{{bigfont}}" bindchange="switch1Change" class="_237fc0a"/></view>
+                </view>
+            </view>

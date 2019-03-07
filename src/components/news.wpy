@@ -1,0 +1,119 @@
+<template>
+<view style="background-color:#FFFFFF;border-radius:2px;">
+<view style="background-color:#F2F2F2"><text>校内通知</text></view>
+<swiper class"swiper_container" vertical="true" autoplay="true"
+circular="true" interval="2000" display-multiple-items="4">
+<block wx:for="{{news}}" wx:key="rowId">
+<navigator url="./web?url={{item.url}}" open-type="navigate">
+  <swiper-item style="margin-left:5px">
+    <view class="swiper-item">{{item.title}}</view>
+    <view class="sub_swiper-item">时间：{{item.date}}</view>
+    <view class="fenge"></view>
+  </swiper-item>
+</navigator>  
+</block>
+       
+</swiper>
+</view>
+</template>
+
+
+<script>
+import wepy from 'wepy'
+import util from '../pages/js/util'
+import config from '../pages/js/config'
+import {wxRequest} from '../pages/js/Request.js'
+
+
+
+export default class Index extends wepy.component {
+  components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+
+          };
+
+          
+          data={
+            
+            page:0,
+            news:[]
+          };
+          onLoad() {
+            console.log('onLoad');
+            this.getmore();
+
+            //this.news=newslist.newslist;
+          }
+          async getmore(){
+            
+
+            try {
+              console.log("加载没")
+              //let res= await wxRequest('get',config.service.Top5News);
+              let resp= await wxRequest('get',config.service.PageNews)
+              //console.log(res);
+              //console.log(resp.content[0].date)
+              var x;var n;var l;
+              for(x in resp.content){
+                  resp.content[x].date=util.timechange(resp.content[x].date)
+                   resp.content[x].url=resp.content[x].url.replace('?','%3F')
+                   resp.content[x].url=resp.content[x].url.replace('=','%3D')
+              }
+              
+               
+              console.log(resp.content)
+              this.news=resp.content;
+              this.$apply();
+
+            } catch (error) {
+              console.log(error);
+            }
+            
+            /*let self=this;
+            wepy.request(config.service.Topten+'?fid='+self.fid).then((d)=>{
+              console.log(d.data);
+              console.log('this.newslist');
+              
+            });*/
+
+          }
+        }
+
+    </script>
+<style lang="less">
+.swiper_container{
+  height:500rpx;
+  width:90vw;
+  margin-top:4px;
+  margin-left:5px;
+  box-shadow: 10rpx #ddd;
+  margin-left:6px;
+}
+.swiper-item{
+  color:#0032FF;
+  font-size:15px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  letter-spacing:2px;
+
+  
+}
+.sub_swiper-item{
+  color:#000000;
+  font-size:14px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  letter-spacing:2px;
+  text-align:left;
+  
+}
+.fenge{
+    height: 1px;
+  width: 100%;
+  background-color:#DCDCDC;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  }
+</style>

@@ -1,0 +1,299 @@
+<template>
+
+<picker-view indicator-style="height: 50px;" style="width: 100%; height: 50px;margin-left:20px" value="{{value}}" bindchange="bindChange">
+    <picker-view-column>
+      <view wx:for="{{list}}" wx:key="" style="line-height: 50px" >{{item}}</view>
+    </picker-view-column>
+</picker-view>
+   <scroll-view scroll-y style="height:950rpx;"scroll-into-view="{{toView}}" scroll-with-animation="true" enable-back-to-top="true">
+
+
+
+<view id="lunwen" wx:if="{{detail.lunwen.length>0}}" class="weui-panel" style="border-radius:12px;margin:0px 10px 5px 10px;height:auto">
+                
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">发表论文</view>
+                        
+                        <block wx:for="{{detail.lunwen}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc" style="font-size:{{font.body}}px">{{item[4]}}.论文：{{item[1]}}</view>
+                        <view class="weui-media-box__desc" style="font-size:{{font.body}}px">刊物：{{item[2]}}</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta" style="font-size:{{font.body}}px">文字来源</view>
+                            <view class="weui-media-box__info__meta" style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra" style="font-size:{{font.body}}px">{{item[3]}}</view>
+                        </view>
+                       </block>
+                     
+                    </view>
+                
+  </view>
+
+  <view id="zhuzuo" wx:if="{{detail.zhuzuo.length>0}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">著作</view>
+                        
+                        <block wx:for="{{detail.zhuzuo}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[6]}}.著作名称：{{item[1]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">出版单位：{{item[2]}}</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[4]}}</view>
+                        </view>
+
+                       </block>
+                     
+                    </view>
+  </view>
+  <view id="hengxiang" wx:if="{{detail.hengxiang.length>0&&(gzh==id||role>1)}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">横向项目</view>
+                        
+                        <block wx:for="{{detail.hengxiang}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[9]}}.项目名称：{{item[1]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">总经费：{{item[7]}}万元</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[3]}}-{{item[6]}}</view>
+                        </view>
+                       </block>
+                     
+                    </view>
+  </view>
+  <view id="zongxiang" wx:if="{{detail.zongxiang.length>0&&(gzh==id||role>1)}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">纵向项目</view>
+                        
+                        <block wx:for="{{detail.zongxiang}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[8]}}.项目名称：{{item[1]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">总经费：{{item[7]}}万元</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">来源：{{item[2]}}</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[3]}}-{{item[6]}}</view>
+                        </view>
+                       </block>
+                     
+                    </view>
+  </view>
+  <view id="rjzz" wx:if="{{detail.rjzz.length>0}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">软件著作权</view>
+                        
+                        <block wx:for="{{detail.rjzz}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[4]}}.软件名称：{{item[1]}}</view>
+                        <view class="weui-media-box__desc"></view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[2]}}</view>
+                        </view>
+                       </block>
+                     
+                    </view>
+  </view>
+  
+  <view id="zhiwu" wx:if="{{detail.zhiwu.length>0}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">植物品种</view>
+                        
+                        <block wx:for="{{detail.zhiwu}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[4]}}.作物名称：{{item[0]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">品种名称：{{item[2]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">单位：{{item[3]}}</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[2]}}</view>
+                        </view>
+                       </block>
+                     
+                    </view>
+  </view>
+  <view id="dongwu" wx:if="{{detail.dongwu.length>0}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">动物品种</view>
+                        
+                        <block wx:for="{{detail.dongwu}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[3]}}.新品种名称：{{item[0]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">    发证机关：{{item[2]}}</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">   文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[1]}}</view>
+                        </view>
+                       </block>
+                     
+                    </view>
+  </view>
+
+    <view id="zhiwuzq" wx:if="{{detail.zhiwuzq.length>0}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">植物品种权</view>
+                        
+                        <block wx:for="{{detail.zhiwuzq}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[4]}}.属或者种：{{item[0]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">    品种名称：{{item[1]}}</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">   文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[2]}}</view>
+                        </view>
+                       </block>
+                     
+                    </view>
+  </view>
+
+
+
+
+
+
+
+
+
+
+    <view id="standard" wx:if="{{detail.standard.length>0}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">标准</view>
+                        <block wx:for="{{detail.standard}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[4]}}.标准名称：{{item[1]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">   标准编号：{{item[2]}}</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">   文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[3]}}</view>
+                        </view>
+                       </block>
+                    </view>
+  </view>
+
+    <view id="reward" wx:if="{{detail.reward.length>0}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">获奖情况</view>
+                        <block wx:for="{{detail.reward}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[4]}}.成果名称：{{item[0]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">    获奖级别：{{item[1]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">    奖种名称：{{item[2]}}</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">   文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[3]}}</view>
+                        </view>
+                       </block>
+                    </view>
+  </view>
+
+
+<view id="other" class="weui-panel" wx:if="{{detail.other.length>0}}" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">其他成果</view>
+                        <block wx:for="{{detail.other}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[4]}}.成果名称：{{item[1]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">    成果类型：{{item[2]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">    证号：{{item[4]}}</view>
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">   文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[3]}}</view>
+                        </view>
+                       </block>
+                    </view>
+  </view>
+
+
+  <view id="zhuanli" wx:if="{{detail.zhuanli.length>0}}" class="weui-panel" style="border-radius:12px;margin:5px 14px 5px 10px;height:auto">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="weui-media-box__title weui-media-box__title_in-text">专利</view>
+                        <block wx:for="{{detail.zhuanli}}" wx:key="{{item[0]}}">
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">{{item[5]}}.专利名称：{{item[1]}}</view>
+                        <view class="weui-media-box__desc"style="font-size:{{font.body}}px">    专利类型：{{item[2]}}</view>
+                        
+                        <view class="weui-media-box__info" style="margin-top:2px;margin-bottom:5px">
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">   文字来源</view>
+                            <view class="weui-media-box__info__meta"style="font-size:{{font.body}}px">时间</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra"style="font-size:{{font.body}}px">{{item[3]}}</view>
+                        </view>
+                       </block>
+                    </view>
+  </view>
+
+</scroll-view>
+</template>
+
+
+<script>
+import wepy from 'wepy';
+import Placeholder from "../components/placeholder"
+
+export default class Index extends wepy.component {
+        components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+
+          };
+          props={
+             detail:{},
+             list:[],
+             id:Number,
+            
+           }
+          data={
+             toView:"lunwen",
+             //list2:[["发表论文","lunwen"],["著作","zhuzuo"]],
+             //list2:["lunwen","zhuzuo"],
+             gzh:Number,
+             role:Number,
+             show:false,
+             bigfont:{
+              title:20,
+              subtitle:15,
+              body:18
+            },
+            font:{
+          title:18,
+          subtitle:13,
+          body:15
+         },
+
+
+          };
+          onLoad() {
+            if(this.$parent.$parent.globalData.bigfont){
+           this.font=this.bigfont;}
+            console.log('onLoad');
+            console.log(this.detail);
+            this.gzh=this.$parent.$parent.globalData.userinfo.gzh;
+            
+            this.role=this.$parent.$parent.globalData.userinfo.role
+            console.log(this.role)
+            
+            var x=0
+            for(x in this.list){
+              console.log(this.list[x])
+            }
+
+            
+          };
+
+          
+          methods={
+            
+            
+            bindChange(e){
+               console.log(e.detail.value[0]);
+
+               console.log(this.list2)
+               var num=e.detail.value[0]
+
+               console.log(this.list2[num])
+               this.toView=this.list2[num]
+            }
+            
+          }
+        }
+
+</script>
+<style lang="less">
+
+</style>

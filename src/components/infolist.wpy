@@ -1,0 +1,141 @@
+<template>
+ <scroll-view scroll-y style="height:1000rpx"  bindscrolltolower="lower"
+ scroll-with-animation="true" bindscroll="bindscroll">
+<block wx:for="{{info}}" wx:key="rowId">
+<navigator url="article?tid={{item[1]}}" open-type="navigate">
+      <view class="swiper-item">{{item[4]}}</view>
+      <view style="display:flex">
+    <view class="sub_swiper-item weui-cell__hd">来源：{{item[2]}}|{{item[5]}}</view>
+    <view class="weui-cell__bd">
+    <image src="../images/browse.png" class="imgaction"></image><text class="sub_swiper-item">{{item[10]}}</text>
+    <image src="../images/edit.png" class="imgaction"></image><text class="sub_swiper-item">{{item[11]}}</text>
+  </view>
+  </view>
+    <view class="fenge"></view>
+  </navigator>  
+</block>
+ <empty :isNone.sync="isNone"></empty>
+</scroll-view> 
+</template>
+<script>
+import wepy from 'wepy'
+import util from '../pages/js/util'
+import tip from '../pages/js/tip'
+import config from '../pages/js/config'
+import empty from '../components/empty'
+import {wxRequest} from '../pages/js/Request'
+
+
+
+export default class infolist extends wepy.component {
+          
+          
+          props ={
+          classify:String,
+          fid:String,
+
+          }
+           components={
+           empty:empty
+  }
+         data={
+          info:[],
+          PageIndex:0,
+          flag:true,
+          isNone: false,
+          
+         }
+       methods={
+          bindscroll(e){
+             //console.log(e.detail)
+             if(e.detail.scrollTop>50){
+              this.$invoke('/searchbar','disappear')
+             }else{
+              this.$invoke('/searchbar','appear')
+             }
+          },
+          lower(e) {
+           if(this.flag){
+            
+            //console.log(e+'到底部了');
+            this.getInfo();
+            
+          }}
+        }
+           
+           onLoad (){
+            tip.loading();
+            this.getInfo();
+            tip.loaded();
+            }
+          async getInfo(){
+            
+            let that=this;
+            this.PageIndex=this.PageIndex+1;
+            let res= await wxRequest('get',config.service.pageTopic+'?fid='+that.fid+'&PageIndex='+that.PageIndex+'&classify='+that.classify);
+            console.log(res);
+            if(res.length==0){
+                that.flag=false;
+                that.isNone=true;
+              }
+              var x;
+              for(x in res){
+                  
+                  res[x][5]=res[x][5].slice(0,10);
+                  
+              }
+              console.log(res)
+              this.info=this.info.concat(res);
+              if (this.info.length<10) {
+                this.isNone=true;
+              }
+              this.$apply();
+       
+
+            }
+        }
+
+    </script>
+<style lang="less">
+
+.swiper-item{
+  
+   color:#000000FF;
+  font-size:15px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  letter-spacing:2px;
+  text-align:left;
+  margin-left:12px;
+  
+}
+.sub_swiper-item{
+  color:#A69D86;
+  font-size:13px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  letter-spacing:2px;
+  text-align:left;
+  margin-left:10px;
+  margin-top:4px;
+  
+}
+.fenge{
+    height: 1px;
+  width: 100%;
+  background-color:#DCDCDC;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  }
+  .imgaction{
+    width: 12px;
+    height:12px;
+    margin-left:2px;
+    float:center;
+  margin-top:4px;
+
+    
+  }
+</style>

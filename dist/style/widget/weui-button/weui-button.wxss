@@ -1,0 +1,7 @@
+.weui-btn {
+  position: fixed;
+  bottom: 2px;
+}
+.weui-btn-area {
+  margin: 1.17647059em 15px 0.3em;
+}

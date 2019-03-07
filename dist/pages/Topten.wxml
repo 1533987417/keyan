@@ -1,0 +1,14 @@
+
+<scroll-view scroll-y style="height:1000rpx" bindscrolltolower="lower" scroll-with-animation="true" bindscroll="bindscroll" class="_9c6c954">
+<block  wx:for="{{info}}" wx:key="rowId" class="_9c6c954">
+<navigator url="article?tid={{item[0]}}" open-type="navigate" class="_9c6c954">
+      <view class="swiper-item _9c6c954">[{{item[2]}}]{{item[1]}}</view>
+      <view style="display:flex" class="_9c6c954">
+    <view class="sub_swiper-item weui-cell__hd _9c6c954">时间：{{item[3]}}</view>
+    
+  </view>
+    <view class="fenge _9c6c954"/>
+  </navigator>  
+</block>
+
+</scroll-view>

@@ -1,0 +1,207 @@
+<template>
+  <view style="background-color:#EFEFEF">
+<view class="weui-panel" style="margin-top:10px;margin-left:5px;margin-right:5px">
+
+                <view class="weui-panel__bd" >
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="zan-font-bold" style="font-size:{{font.title}}px">{{article.title}}[{{article.category}}]</view>
+                        
+                        <view class="weui-media-box__info" style="font-size:{{font.subtitle}}px">
+                            <view class="weui-media-box__info__meta">来源:{{article.bmmc}}</view>
+                            <view class="weui-media-box__info__meta">{{article.poster}}</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">分类：{{article.classify}}</view>
+                          </view>
+                        <view class="weui-media-box__info" style="font-size:{{font.subtitle}}px">
+                            <view class="weui-media-box__info__meta">{{article.postdatetime}}</view>
+                        </view>
+                    </view>
+
+                </view>  
+                 
+                 <view class="body" style="font-size: {{font.body}}px;"><wxparser rich-text="{{article.summary}}"></wxparser></view>
+
+                  
+            </view>
+            
+                <view class="weui-panel"style="margin-top:5px;margin-left:5px;margin-right:5px;height:40px;display: flex;">
+                <view class="zan-c-gray-dark zan-font-14" style ="margin-top:5px;float:left">浏览：{{article.views}}次 | 回帖 ：{{article.replies}}</view><view wx:if="{{aPlus}}" data-tid="{{article.tid}}" data-fid="{{article.fid}}" class="zan-c-gray-dark zan-font-14" style ="margin-top:5px;margin-left:340rpx" @tap="open">管理</view>
+              </view>
+            <postlist :tid.sync="tid" :font.sync="font"></postlist>
+            
+          </view>
+          
+</template>
+
+
+<script>
+    import wepy from 'wepy'
+    import postlist from '../components/postlist'
+    import 'wepy-async-function'
+    import config from '../pages/js/config'
+    import {wxRequest} from '../pages/js/Request'
+    import tip from '../pages/js/tip'
+    import util from  '../pages/js/util'
+    export default class test extends wepy.page {
+        components = {
+            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+            postlist:postlist,
+            
+        };
+        config = {
+            navigationBarTitleText: '帖子详情',
+            "usingComponents":{
+              "wxparser":"plugin://wxparserPlugin/wxparser"
+            }
+         }
+        data={
+         article:{},
+         tid:Number,
+         bmdm:String ,
+         role:Number ,
+         gzh:String ,
+         font:{
+          title:18,
+          subtitle:13,
+          body:15
+         },
+         bigfont:{
+          title:20,
+          subtitle:15,
+          body:18
+         }
+        // role=3||(role==2&&dbmm==article.dbmm)||(role==1&&gzh==article.posterid)
+          }
+        async onLoad(option){
+           
+          this.tid=option.tid;
+          console.log(this.tid)
+          this.bmdm=this.$parent.globalData.userinfo.bmdm;
+          this.role=this.$parent.globalData.userinfo.role;
+          this.gzh=this.$parent.globalData.userinfo.gzh
+          console.log(this.bmdm)
+          if(this.$parent.globalData.bigfont)
+           {
+           this.font=this.bigfont;
+         }
+       
+        var that=this;
+         let res=await wxRequest('get',config.service.topicdetail+'?tid='+this.tid);
+             //console.log(res)
+             //res[0].postdatetime=res[0].postdatetime.slice(0,10)+" "+res[0].postdatetime.slice(11,16);
+            res[0].postdatetime=util.timechange(res[0].postdatetime);
+             res[0].bmdm=util.trim(res[0].bmdm)
+              that.article=res[0];
+              console.log(res);
+              that.$apply();
+              console.log(this.article.bmdm.length +"sdadas"+this.bmdm.length  )
+              }
+
+
+      
+
+        onReachBottom(){
+          
+          this.$invoke('postlist','getmore');
+
+        }
+        computed = {
+          aPlus () {
+            
+            if(this.role==3){
+              return true
+            }
+            else if(this.role==2&&(this.bmdm==this.article.bmdm)){
+              return  true  
+
+            }else if (this.role==1&&(this.gzh==this.article.posterid)){
+              return true 
+            }
+            else  {
+              return  false
+            }
+          }
+        }
+        onShow() {
+           this.$invoke('postlist','getmore');
+        }
+        methods={
+            async open (e) {
+            var that=this;
+            let res = await wepy.showActionSheet({
+              itemList: ['删除']
+            });
+            
+            if (!res.cancel) {
+              wepy.showModal({
+                title: "是否删除该主题",
+                content: "若主题删除，有关评论将一并清空",
+                cancelText:"取消",
+                confirmText:"删除"
+              }).then((d)=>{
+                console.log(d)
+                if(d.confirm){
+                  console.log(e.currentTarget.dataset.fid)
+                  wxRequest('get',config.service.DeleteTopic+'?tid='+e.currentTarget.dataset.tid+'&fid='+e.currentTarget.dataset.fid).then((resp)=>{
+                    if(resp==1){
+                     tip.success('删除成功');
+                     wepy.reLaunch({url:"/pages/index"})
+                          // that.$apply();
+                       //tip.toast('加载中',false,'loading');
+                       
+
+                     }
+
+                     else{
+                      tip.error('数据不存在');
+                    }
+                  })
+                  
+
+                  
+                }
+                
+
+              })
+              
+            }
+          },
+          onShareAppMessage(res) {
+
+        if (res.from === 'button') {
+          // 来自页面内转发按钮
+          console.log(res.target)
+
+        }
+        return {
+          title: this.article.title,
+          path: '/pages/article?tid='+this.article.tid,
+          success: function(res) {
+            // 转发成功
+          },
+          fail: function(res) {
+            // 转发失败
+          }
+        }
+      }
+        }
+
+    }
+</script>
+<style lang="css">
+
+.body{
+       margin-top: 2px;
+       margin-left:12px;
+       margin-right: 6px;
+       margin-bottom: 4px;
+       
+       
+       white-space:pre-line;  }
+
+.fengge{
+  width:100%;
+  height: 10px;
+  background-color: #FFFFFF;
+}
+
+</style>

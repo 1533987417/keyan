@@ -1,0 +1,31 @@
+@import "./empty.wxss";
+.swiper_container {
+  height: 1000rpx;
+  width: 100vw;
+  margin-top: 0rpx;
+  margin-left: 2px;
+}
+.swiper-item {
+  color: #0032FF;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 2px;
+}
+.sub_swiper-item {
+  color: #A69D86;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 2px;
+  text-align: left;
+}
+.fenge {
+  height: 1px;
+  width: 100%;
+  background-color: #DCDCDC;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}

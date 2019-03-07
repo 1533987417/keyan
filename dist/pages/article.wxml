@@ -1,0 +1,97 @@
+
+  <view style="background-color:#EFEFEF">
+<view class="weui-panel" style="margin-top:10px;margin-left:5px;margin-right:5px">
+
+                <view class="weui-panel__bd">
+                    <view class="weui-media-box weui-media-box_text">
+                        <view class="zan-font-bold" style="font-size:{{font.title}}px">{{article.title}}[{{article.category}}]</view>
+                        
+                        <view class="weui-media-box__info" style="font-size:{{font.subtitle}}px">
+                            <view class="weui-media-box__info__meta">来源:{{article.bmmc}}</view>
+                            <view class="weui-media-box__info__meta">{{article.poster}}</view>
+                            <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">分类：{{article.classify}}</view>
+                          </view>
+                        <view class="weui-media-box__info" style="font-size:{{font.subtitle}}px">
+                            <view class="weui-media-box__info__meta">{{article.postdatetime}}</view>
+                        </view>
+                    </view>
+
+                </view>  
+                 
+                 <view class="body" style="font-size: {{font.body}}px;"><wxparser rich-text="{{article.summary}}"/></view>
+
+                  
+            </view>
+            
+                <view class="weui-panel" style="margin-top:5px;margin-left:5px;margin-right:5px;height:40px;display: flex;">
+                <view class="zan-c-gray-dark zan-font-14" style="margin-top:5px;float:left">浏览：{{article.views}}次 | 回帖 ：{{article.replies}}</view><view  wx:if="{{aPlus}}" data-tid="{{article.tid}}" data-fid="{{article.fid}}" class="zan-c-gray-dark zan-font-14" style="margin-top:5px;margin-left:340rpx" bindtap="open">管理</view>
+              </view>
+            
+ <view class="page" style="margin-left:5px;margin-right:5px">
+      
+           
+
+
+
+ <scroll-view scroll-y style="height:auto;margin-bottom:50px;margin-right:5px">
+            <view class="weui-panel weui-panel_access">
+                <view class="weui-panel__hd" style="font-size:{{$postlist$font.body}}px">全部回复</view>
+                <view class="weui-panel__bd">
+                <block  wx:for="{{$postlist$postlist}}" wx:key="{{item[0]}}">
+               
+                <view class="weui-cell">
+                    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                        <image src="../images/touxiang.png" class="img"/>
+                        
+                    </view>
+                    <view class="weui-cell__bd" style="font-size:{{$postlist$font.body}}px">
+                        <navigator url="detail?gzh={{item[5]}}" open-type="navigate"><view>{{item[4]}}</view></navigator>
+                        <view style="font-size: {{$postlist$font.subtitle}}px;color: #888888;">第{{item[3]+1}}楼 | {{item[7]}} | {{item[11]}}</view>
+                    </view>
+                    <view>
+                      <image id="{{item[0]}}" wx:if="{{item[5]==$postlist$gzh}}" src="../images/icon_nav_nav.png" class="imgaction" bindtap="$postlist$open"/>
+                      <block wx:elif="{{$postlist$role==2}}">
+                       <image id="{{item[0]}}" wx:if="{{item[10]==$postlist$dbmm}}" src="../images/icon_nav_nav.png" class="imgaction" bindtap="$postlist$open"/>
+                     </block>
+                     <block wx:elif="{{$postlist$role==3}}">
+                       <image id="{{item[0]}}" src="../images/icon_nav_nav.png" class="imgaction" bindtap="$postlist$open"/>
+                     </block>
+                     
+                    </view>
+                </view>
+                 <view class="textbody" style="font-size:{{$postlist$font.body}}px"><wxparser rich-text="{{item[8]}}"/></view>
+                 
+               </block>
+                </view>
+               
+ <view hidden="{{!$postlist$empty$isNone}}" class="weui-loadmore weui-loadmore_line">
+  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+</view>
+<view hidden="{{$postlist$empty$isNone}}" class="weui-loadmore">
+  <view class="weui-loading"/>
+  <view class="weui-loadmore__tips">正在加载</view>
+</view>
+            
+
+              
+            </view>
+            
+  </scroll-view>
+  <form bindsubmit="$postlist$submit" bindreset="$postlist$formReset">
+    <view class="weui-cells weui-cells_after-title" style="position:fixed;bottom:0px;width:100%;height:50px">
+      <view class="weui-cell weui-cell_input">
+
+        <view class="weui-cell__bd">
+          <input bindfocus="$postlist$focus" value="{{$postlist$text}}" name="text" class="weui-input" confirm-type="send" placeholder="说说你的看法" bindconfirm="$postlist$send"/>
+        </view>
+        <view class="weui-cell__ft">
+          <button disabled="{{$postlist$disclick}}" class="weui-vcode-btn" style=" border-color: #FFFFFF;height:50px;background-color:#FFFFFF;margin-right: -15px;" formType="submit">发表</button>
+
+        </view>
+
+      </view>
+    </view> </form>
+    </view>
+
+            
+          </view>

@@ -1,0 +1,28 @@
+@import "./empty.wxss";
+.weui-cell__bd {
+  text-align: left;
+  width: 100%;
+  margin-top: 5px;
+}
+.img {
+  border-radius: 30px;
+  width: 45px;
+  height: 45px;
+  display: block;
+}
+.textbody {
+  margin-left: 55px;
+  margin-right: 2px;
+  font-size: 15px;
+}
+.imgaction {
+  width: 25px;
+  height: 25px;
+  display: block;
+}
+.btn {
+  border-color: #FFFFFF;
+  height: 50px;
+  background-color: #FFFFFF;
+  margin-right: -15px;
+}
