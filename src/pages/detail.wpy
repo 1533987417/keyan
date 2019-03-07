@@ -1,154 +1,162 @@
 <style lang="less">
-
 </style>
 <template>
-
-<view hidden="{{tab1.selectedId!=0}}">
-<teacherinfo :user.sync="user"></teacherinfo>
-</view>
-<view hidden="{{tab1.selectedId!=1}}">
-<article :list.sync="list" :detail.sync="detail" :id.sync="id" :list2.sync="list2"></article>
-</view>
-
-    <view style="position:fixed;bottom:-25px;">
-      <tab :tab.sync="tab1" componentId="tab1"></tab>
+    <view hidden="{{tab1.selectedId!=0}}">
+        <teacherinfo :user.sync="user"></teacherinfo>
     </view>
-    
+    <view hidden="{{tab1.selectedId!=1}}">
+        <article :list.sync="list" :detail.sync="detail" :id.sync="id" :list2.sync="list2"></article>
+    </view>
+    <view style="position:fixed;bottom:-25px;">
+        <tab :tab.sync="tab1" componentId="tab1"></tab>
+    </view>
 </template>
-
 <script>
-    import wepy from 'wepy'
-    import tab from '../components/tab'
-    import teacherinfo from '../components/teacherinfo'
-    import article from '../components/article'
-    import config from '../pages/js/config'
-    import util from '../pages/js/util'
-    import {wxRequest} from '../pages/js/Request'
-   
-
-    
-    
-
-    const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
-
-    export default class Toast extends wepy.page {
-
-        config={
-            navigationBarTitleText:''
-        }
-        data = {
-            user:[],
-            tab1: {
-              list: [
-              {
-                  id: 0,
-                  title: '基本信息'
-              },
-              {
-                  id:1,
-                  title: '科研情况'
-              }],
-              selectedId:0,
-              scroll: false,
-              
-          },
-           detail:{},
-           list:[],
-           list2:[],
-           id:Number
-          
+import wepy from 'wepy'
+import tab from '../components/tab'
+import teacherinfo from '../components/teacherinfo'
+import article from '../components/article'
+import config from '../pages/js/config'
+import util from '../pages/js/util'
+import { wxRequest } from '../pages/js/Request'
 
 
-        };
-       components={
-        tab:tab,
+
+
+
+const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+
+export default class Toast extends wepy.page {
+
+    config = {
+        navigationBarTitleText: ''
+    }
+    data = {
+        user: [],
+        tab1: {
+            list: [{
+                    id: 0,
+                    title: '基本信息'
+                },
+                {
+                    id: 1,
+                    title: '科研情况'
+                }
+            ],
+            selectedId: 0,
+            scroll: false,
+
+        },
+        detail: {},
+        list: [],
+        list2: [],
+        id: Number
+
+
+
+    };
+    components = {
+        tab: tab,
         teacherinfo,
-        article:article
-          
-       }
-       methods = {
-       
-}
-       
+        article: article
 
-        events = {
-            zanTabChange(selectedId, event) {
-              let { componentId } = event.source
-              this[componentId].selectedId = selectedId
-              this.$apply()
-          }
-  }
-        async onLoad (e) {
-          let that=this
-           console.log(e.gzh)
-          
-         
-           let res=await wxRequest('get',config.service.getGetProfile+'?gzh='+e.gzh)
-            that.user=res;
-            that.id=res[0][0]
-            console.log(that.user[0][0]);
+    }
+    methods = {
 
-            wx.setNavigationBarTitle({title:that.user[0][1]});
-            that.$apply();
-            this.getlists(e.gzh)
-                      
-            //that.$apply();
-            
+    }
 
 
-            
-        }
-       async getlists(gzh){
-        let that=this
-          let resp=await wxRequest('get',config.service.getGetResearch+'?gzh='+gzh)
-          console.log(resp)
-            if(resp.lunwen.length>0){that.list.push("发表论文");this.list2.push("lunwen")}
-           that.detail.lunwen=util.addnum(resp.lunwen)
-         
-            if(resp.zhuzuo.length>0){that.list.push("著作");this.list2.push("zhuzuo")}
-            that.detail.zhuzuo=util.addnum(resp.zhuzuo)
-
-            if(resp.hengxiang.length>0&&that.id==that.$parent.globalData.userinfo.gzh){that.list.push("横向项目");this.list2.push("hengxiang")}
-            that.detail.hengxiang=util.addnum(resp.hengxiang)
-
-            if(resp.zongxiang.length>0&&that.id==that.$parent.globalData.userinfo.gzh){that.list.push("纵向项目");this.list2.push("zongxiang")}
-            that.detail.zongxiang=util.addnum(resp.zongxiang)
-
-            if(resp.dongwu.length>0){that.list.push("动物品种");this.list2.push("dongwu")}
-            that.detail.dongwu=util.addnum(resp.dongwu)
-
-            if(resp.zhiwu.length>0){that.list.push("植物品种");this.list2.push("zhiwu")}
-            that.detail.zhiwu=util.addnum(resp.zhiwu)
-
-            if(resp.zhiwuzq.length>0){that.list.push("植物品种权");this.list2.push("zhiwuzq")}
-            that.detail.zhiwuzq=util.addnum(resp.zhiwuzq)
-
-            if(resp.rjzz.length>0){that.list.push("软件著作权");this.list2.push("rjzz")}
-            that.detail.rjzz=util.addnum(resp.rjzz)
-
-
-           if(resp.reward.length>0){that.list.push("获奖");this.list2.push("reward")}
-            that.detail.reward=util.addnum(resp.reward)
-
-          if(resp.standard.length>0){that.list.push("标准");this.list2.push("standard")}
-            that.detail.standard=util.addnum(resp.standard)
-
-          if(resp.zhuanli.length>0){that.list.push("专利");this.list2.push("zhuanli")}
-            that.detail.zhuanli=util.addnum(resp.zhuanli)
-          
-
-          if(resp.other.length>0){that.list.push("其他成果");this.list2.push("other")}
-            that.detail.other=util.addnum(resp.other)
-
-
-
-
-
-
-
-            console.log(that.list)
-            that.$apply()
-
+    events = {
+        zanTabChange(selectedId, event) {
+            let { componentId } = event.source
+            this[componentId].selectedId = selectedId
+            this.$apply()
         }
     }
+    async onLoad(e) {
+        let that = this
+        console.log(e.gzh)
+
+
+        let res = await wxRequest('get', config.service.getGetProfile + '?gzh=' + e.gzh)
+        that.user = res;
+        that.id = res[0][0]
+        console.log(that.user[0][0]);
+
+        wx.setNavigationBarTitle({ title: that.user[0][1] });
+        that.$apply();
+        this.getlists(e.gzh)
+
+        //that.$apply();
+
+
+
+
+    }
+    async getlists(gzh) {
+        let that = this
+        let resp = await wxRequest('get', config.service.getGetResearch + '?gzh=' + gzh)
+        console.log(resp)
+        if (resp.lunwen.length > 0) { that.list.push("发表论文");
+            this.list2.push("lunwen") }
+        that.detail.lunwen = util.addnum(resp.lunwen)
+
+        if (resp.zhuzuo.length > 0) { that.list.push("著作");
+            this.list2.push("zhuzuo") }
+        that.detail.zhuzuo = util.addnum(resp.zhuzuo)
+
+        if (resp.hengxiang.length > 0 && that.id == that.$parent.globalData.userinfo.gzh) { that.list.push("横向项目");
+            this.list2.push("hengxiang") }
+        that.detail.hengxiang = util.addnum(resp.hengxiang)
+
+        if (resp.zongxiang.length > 0 && that.id == that.$parent.globalData.userinfo.gzh) { that.list.push("纵向项目");
+            this.list2.push("zongxiang") }
+        that.detail.zongxiang = util.addnum(resp.zongxiang)
+
+        if (resp.dongwu.length > 0) { that.list.push("动物品种");
+            this.list2.push("dongwu") }
+        that.detail.dongwu = util.addnum(resp.dongwu)
+
+        if (resp.zhiwu.length > 0) { that.list.push("植物品种");
+            this.list2.push("zhiwu") }
+        that.detail.zhiwu = util.addnum(resp.zhiwu)
+
+        if (resp.zhiwuzq.length > 0) { that.list.push("植物品种权");
+            this.list2.push("zhiwuzq") }
+        that.detail.zhiwuzq = util.addnum(resp.zhiwuzq)
+
+        if (resp.rjzz.length > 0) { that.list.push("软件著作权");
+            this.list2.push("rjzz") }
+        that.detail.rjzz = util.addnum(resp.rjzz)
+
+
+        if (resp.reward.length > 0) { that.list.push("获奖");
+            this.list2.push("reward") }
+        that.detail.reward = util.addnum(resp.reward)
+
+        if (resp.standard.length > 0) { that.list.push("标准");
+            this.list2.push("standard") }
+        that.detail.standard = util.addnum(resp.standard)
+
+        if (resp.zhuanli.length > 0) { that.list.push("专利");
+            this.list2.push("zhuanli") }
+        that.detail.zhuanli = util.addnum(resp.zhuanli)
+
+
+        if (resp.other.length > 0) { that.list.push("其他成果");
+            this.list2.push("other") }
+        that.detail.other = util.addnum(resp.other)
+
+
+
+
+
+
+
+        console.log(that.list)
+        that.$apply()
+
+    }
+}
+
 </script>

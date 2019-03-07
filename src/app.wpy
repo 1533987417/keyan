@@ -5,23 +5,26 @@
 @import "./assets/styles/app.less";
 @import "./assets/styles/utils.less";
 
-page{
+page {
     background-color: #F8F8F8;
     font-size: 16px;
-    font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+    font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
 }
+
 .page__hd {
     padding: 40px;
 }
+
 .page__bd {
     padding-bottom: 40px;
 }
+
 .page__bd_spacing {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-.page__ft{
+.page__ft {
     padding-bottom: 10px;
     text-align: center;
 }
@@ -38,10 +41,9 @@ page{
     text-align: left;
     font-size: 14px;
 }
+
 </style>
-
 <script>
-
 import wepy from 'wepy';
 import 'wepy-async-function'
 import db from './pages/js/db'
@@ -54,30 +56,30 @@ export default class extends wepy.app {
     config = {
 
         'pages': [
-        'pages/index',
-        'pages/indextemp','pages/t',
+            'pages/index',
+            'pages/indextemp', 'pages/t',
 
-        'pages/share',
-        'pages/report',
-        'pages/bind',
-        'pages/advice',
-        'pages/myPosts',
-        'pages/collegeTopics',
-        'pages/searchresult',
-        'pages/require','pages/msg_success',
-        'pages/interaction',
-        'pages/article',
-        'pages/detail',
-        'pages/teacherinfo',
-        'pages/web',
-        'pages/dynamic',
-        'pages/zcinfo',
-         'pages/inform',
-         'pages/banshi',
-         'pages/mytopic',
-        'pages/publish',
-        'pages/Topten',
-         'pages/settings',
+            'pages/share',
+            'pages/report',
+            'pages/bind',
+            'pages/advice',
+            'pages/myPosts',
+            'pages/collegeTopics',
+            'pages/searchresult',
+            'pages/require', 'pages/msg_success',
+            'pages/interaction',
+            'pages/article',
+            'pages/detail',
+            'pages/teacherinfo',
+            'pages/web',
+            'pages/dynamic',
+            'pages/zcinfo',
+            'pages/inform',
+            'pages/banshi',
+            'pages/mytopic',
+            'pages/publish',
+            'pages/Topten',
+            'pages/settings',
         ],
         'window': {
             'navigationBarTextStyle': 'black',
@@ -85,11 +87,11 @@ export default class extends wepy.app {
             'navigationBarBackgroundColor': '#f8f8f8',
             'backgroundColor': '#f8f8f8',
 
-            'enablePullDownRefresh':false,
-            'onReachBottomDistance':100
+            'enablePullDownRefresh': false,
+            'onReachBottomDistance': 100
 
         },
-        
+
         'networkTimeout': {
             'request': 10000,
             'connectSocket': 10000,
@@ -113,59 +115,60 @@ export default class extends wepy.app {
             selectedIconPath: './images/settings-selected.png'
         }]
     },*/
-        "plugins":{
-                "wxparserPlugin":{
-                    "version":"0.1.0",
-                    "provider":"wx9d4d4ffa781ff3ac"
-                }
-
+        "plugins": {
+            "wxparserPlugin": {
+                "version": "0.1.0",
+                "provider": "wx9d4d4ffa781ff3ac"
             }
-    };
-   globalData = {
-            userinfo:{
-                gzh:String,
-                xm:String,
-                bmdm :String,
-                bmmc : String,
-                role:Number,//1.只能查到个人，2.查学院
-                
-            },
-            ip:'wx',
-            appid: 'wx6b121941b200ea50',
-            secret: '36a76b0682bd2c3f1541fd012fac66f5',
-            bigfont:false
-        };
 
-    constructor () {
+        }
+    };
+    globalData = {
+        userinfo: {
+            gzh: String,
+            xm: String,
+            bmdm: String,
+            bmmc: String,
+            role: Number, //1.只能查到个人，2.查学院
+
+        },
+        ip: 'wx',
+        appid: 'wx6b121941b200ea50',
+        secret: '36a76b0682bd2c3f1541fd012fac66f5',
+        bigfont: false
+    };
+
+    constructor() {
         super();
         this.use('promisify');
         this.use('requestfix');
     }
-    
-  async  onLaunch(){
-        
-       this.globalData.userinfo=db.Get('userinfo')
+
+    async onLaunch() {
+
+        this.globalData.userinfo = db.Get('userinfo')
         /*if(db.Get('token').length!=0){
             wepy.
 
         }*/
         console.log(db.Get('userinfo'))
-        if(db.Get('userinfo').gzh==undefined||db.Get('userinfo').gzh==''){
+        if (db.Get('userinfo').gzh == undefined || db.Get('userinfo').gzh == '') {
             wepy.showModal({
-            title: "账号信息错误",
-            content: "统一身份认证账号已过期！是否前往重新登陆？"
-            }).then((d)=>{
+                title: "账号信息错误",
+                content: "统一身份认证账号已过期！是否前往重新登陆？"
+            }).then((d) => {
                 console.log(d)
-                if(d.confirm){
-                    wx.redirectTo({url:'bind'})
+                if (d.confirm) {
+                    wx.redirectTo({ url: 'bind' })
                 }
             });
         }
 
     }
-    onShow(e){
+    onShow(e) {
         console.log(e.scene)
     }
-    
+
 }
+
 </script>

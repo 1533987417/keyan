@@ -1,126 +1,131 @@
 <style lang="less">
 .navbar {
+
     .page,
-    .page__bd{
+    .page__bd {
         height: 100%;
     }
-    .page__bd{
+
+    .page__bd {
         padding-bottom: 0;
     }
-    .weui-tab__content{
+
+    .weui-tab__content {
         padding-top: 0px;
         text-align: center;
 
     }
-    .bar{
-        position:fixed;
-        
-        background-color:#F8F8F8FF;
-        opacity:1
+
+    .bar {
+        position: fixed;
+
+        background-color: #F8F8F8FF;
+        opacity: 1
     }
 }
+
 </style>
 <template>
     <view class="navbar page">
         <view class="page__bd">
-            
             <view class="weui-tab">
                 <view class="weui-navbar bar">
                     <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
                         <view class="weui-navbar__title">{{item}}</view>
                     </view>
                     <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
-                
                 </view>
             </view>
             <view class="weui-tab__panel">
-                    <view class="weui-tab__content" hidden="{{activeIndex != 0}}"><br><schoollist :school.sync="school"></schoollist></view>
-                    <view class="weui-tab__content" hidden="{{activeIndex != 1}}"><br><teacherlist :teacher.sync="teacher"></teacherlist></view>
-                    
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}"><br>
+                    <schoollist :school.sync="school"></schoollist>
+                </view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}"><br>
+                    <teacherlist :teacher.sync="teacher"></teacherlist>
+                </view>
             </view>
         </view>
     </view>
-    
 </template>
-
 <script>
-    import wepy from 'wepy'
+import wepy from 'wepy'
 
-    import tip from '../pages/js/tip'
-    import config from '../pages/js/config'
-   
-    import schoollist from '../components/schoollist'
-    import teacherlist from '../components/teacherlist'
-    import {wxRequest} from '../pages/js/Request'
-    
-    
+import tip from '../pages/js/tip'
+import config from '../pages/js/config'
 
-    const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+import schoollist from '../components/schoollist'
+import teacherlist from '../components/teacherlist'
+import { wxRequest } from '../pages/js/Request'
 
-    export default class Toast extends wepy.page {
 
-        config={
-            navigationBarTitleText:'教师科研'
+
+const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+
+export default class Toast extends wepy.page {
+
+    config = {
+        navigationBarTitleText: '教师科研'
+    }
+    data = {
+        tabs: ['学院', '教师'],
+        activeIndex: 0,
+        sliderOffset: 0,
+        sliderLeft: 0,
+        school: [],
+        teacher: []
+
+
+    };
+    components = {
+
+        schoollist: schoollist,
+        teacherlist: teacherlist
+    }
+    methods = {
+        tabClick(e) {
+            console.log(e);
+            this.sliderOffset = e.currentTarget.offsetLeft;
+            this.activeIndex = e.currentTarget.id;
+
+        },
+        getColleges(e) {
+            console.log("刷新啦");
         }
-        data = {
-            tabs: ['学院', '教师'],
-            activeIndex: 0,
-            sliderOffset: 0,
-            sliderLeft: 0,
-            school:[],
-            teacher:[]
+    }
 
+    async onLoad() {
+        let res = await wepy.getSystemInfo();
 
-        };
-       components={
-        
-          schoollist:schoollist,
-          teacherlist:teacherlist
-       }
-        methods = {
-            tabClick (e) {
-                console.log(e);
-                this.sliderOffset = e.currentTarget.offsetLeft;
-                this.activeIndex = e.currentTarget.id;
+        this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
+        this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;
+        this.fuzhu = res.windowWidth / 2;
+        console.log('test加载了');
+        //this.school=school.school;
+        //this.teacher=teacher.teacher;
+    }
+    events = {
+        'getColleges': async (e) => {
 
-            },
-            getColleges(e){
-                console.log("刷新啦");
-            }
-        }
+            this.activeIndex = 1;
+            this.sliderOffset = this.fuzhu;
 
-        async onLoad () {
-            let res = await wepy.getSystemInfo();
+            console.log(e + "jsahhadhsadh");
+            this.$invoke('teacherlist', 'getColleges', e);
 
-            this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
-            this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;
-            this.fuzhu=res.windowWidth / 2;
-            console.log('test加载了');
-            //this.school=school.school;
-            //this.teacher=teacher.teacher;
-        }
-        events={
-            'getColleges':async (e)=>{
-                
-                this.activeIndex=1;
-                this.sliderOffset=this.fuzhu;
-
-console.log(e+"jsahhadhsadh");
-                this.$invoke('teacherlist','getColleges',e);
-               
-               /*tip.loading();
+            /*tip.loading();
                wepy.request(config.service.GetCollegeMember+'?College='+e).then((d)=>{
               console.log(d.data);
               this.teacher=d.data;
               tip.loaded();
               this.$apply();
             })*/
-               let res=await wxRequest('get',config.service.GetCollegeMember+'?College='+e)
-               this.teacher=res;
-              
-              this.$apply();
+            let res = await wxRequest('get', config.service.GetCollegeMember + '?College=' + e)
+            this.teacher = res;
 
-            }
+            this.$apply();
+
         }
     }
+}
+
 </script>

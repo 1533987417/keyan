@@ -1,5 +1,5 @@
 <style lang="less">
-.list{
+    .list{
     margin-top:0rpx;
    
    
@@ -28,51 +28,53 @@ image{
 <template>
     <searchbar></searchbar>
     <infolist :fid.sync="fid" :classify.sync="classify" class="list"></infolist>
-    <view class="publisher-btn" wx:if="{{role>0?true:false}}" id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click"><image id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click"  src="../assets/images/feather.png"></image></view>
+    <view class="publisher-btn" wx:if="{{role>0?true:false}}" id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click">
+        <image id="{{fid}}" data-category="{{category}}" type="primary" bindtap="click" src="../assets/images/feather.png"></image>
+    </view>
 </template>
-
 <script>
-    import wepy from 'wepy'
-    
-    import infolist from '../components/infolist'
-    import searchbar from '../components/searchbar'
+import wepy from 'wepy'
 
-    const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+import infolist from '../components/infolist'
+import searchbar from '../components/searchbar'
 
-    export default class report extends wepy.page {
+const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
-        config={
-            navigationBarTitleText:'资源共享'
-        }
-        data = {
-            classify:'资源共享',
-            fid:'3',
-            category:'资源共享',
-            role:Number
-            
+export default class report extends wepy.page {
 
-        }
-       components={
-        
-          infolist:infolist,
-          searchbar:searchbar
-       }
-        methods = {
-            tabClick (e) {
-                this.sliderOffset = e.currentTarget.offsetLeft;
-                this.activeIndex = e.currentTarget.id;
-            },
-            click(e){
-                console.log(e)
-                wx.navigateTo({url:'publish?fid='+e.target.id+'&category='+this.category})
-            }
-        }
+    config = {
+        navigationBarTitleText: '资源共享'
+    }
+    data = {
+        classify: '资源共享',
+        fid: '3',
+        category: '资源共享',
+        role: Number
 
-        async onLoad () {
-            let res = await wepy.getSystemInfo();
-             //this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
-            //this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;
-            this.role=this.$parent.globalData.userinfo.role
+
+    }
+    components = {
+
+        infolist: infolist,
+        searchbar: searchbar
+    }
+    methods = {
+        tabClick(e) {
+            this.sliderOffset = e.currentTarget.offsetLeft;
+            this.activeIndex = e.currentTarget.id;
+        },
+        click(e) {
+            console.log(e)
+            wx.navigateTo({ url: 'publish?fid=' + e.target.id + '&category=' + this.category })
         }
     }
+
+    async onLoad() {
+        let res = await wepy.getSystemInfo();
+        //this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
+        //this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;
+        this.role = this.$parent.globalData.userinfo.role
+    }
+}
+
 </script>

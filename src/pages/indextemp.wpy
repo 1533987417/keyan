@@ -1,81 +1,75 @@
 <style lang="less">
-.img{
-  width:100%;
-  height:50px;
+.img {
+    width: 100%;
+    height: 50px;
 }
-.swiper{
-  height:348rpx;
-  
+
+.swiper {
+    height: 348rpx;
+
 
 }
-.slide-image{
-  height:100%;
-  width:100%;
-  border-radius:4px;
+
+.slide-image {
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
 }
 
 </style>
 <template>
-  <view style="background-color:#F2F2F2;margin:0 2px;">
-   <swiper class="swiper" indicator-active-color="{{indicatorActiveColor}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">
-    <block wx:for="{{imgUrls}}" wx:key="">
-    <swiper-item>
-      <image src="{{item}}" class="slide-image" width="355" height="150"/>
-    </swiper-item>
-    </block>
-    </swiper>
-
-   <subnavtemp></subnavtemp>
-
-    <news></news>
-     
-
-  </view>
-     
-  
-   
-  
+    <view style="background-color:#F2F2F2;margin:0 2px;">
+        <swiper class="swiper" indicator-active-color="{{indicatorActiveColor}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">
+            <block wx:for="{{imgUrls}}" wx:key="">
+                <swiper-item>
+                    <image src="{{item}}" class="slide-image" width="355" height="150" />
+                </swiper-item>
+            </block>
+        </swiper>
+        <subnavtemp></subnavtemp>
+        <news></news>
+    </view>
 </template>
-
 <script>
-  import wepy from 'wepy'
- 
-  import subnavtemp from '../components/subnavtemp'
-  import news from '../components/news'
-  import placeholder from '../components/placeholder'
-  import {wxRequest} from '../pages/js/Request.js'
-  import db from '../pages/js/db'
-  
+import wepy from 'wepy'
 
-  export default class Index extends wepy.page {
+import subnavtemp from '../components/subnavtemp'
+import news from '../components/news'
+import placeholder from '../components/placeholder'
+import { wxRequest } from '../pages/js/Request.js'
+import db from '../pages/js/db'
+
+
+export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '科研系统'
+        navigationBarTitleText: '科研系统'
     };
-    components={
-      subnavtemp:subnavtemp,
-      news:news,
-      
+    components = {
+        subnavtemp: subnavtemp,
+        news: news,
+
     };
-    data={
-      imgUrls:[
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg','../images/bc_qdyl.png'],
-      indicatorDots: true,
-      indicatorActiveColor: "#7AC5CD",
-      autoplay:true,
-      interval:5000,
-      duration:500,
-      
+    data = {
+        imgUrls: [
+            'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg', '../images/bc_qdyl.png'
+        ],
+        indicatorDots: true,
+        indicatorActiveColor: "#7AC5CD",
+        autoplay: true,
+        interval: 5000,
+        duration: 500,
+
     }
-    onLoad(){
-       console.log("缓存")
-     // this.$invoke('news','getmore');
-      console.log(db.Get('token'))
-      console.log(this.$parent.globalData.userinfo)
-      
- 
+    onLoad() {
+        console.log("缓存")
+        // this.$invoke('news','getmore');
+        console.log(db.Get('token'))
+        console.log(this.$parent.globalData.userinfo)
+
+
     }
-    onLaunch(){
-          }
-    
-  }
+    onLaunch() {}
+
+}
+
 </script>

@@ -1,115 +1,122 @@
 <style lang="less">
-.publisher-btn{
-  width: 50px;
-  height: 50px;
-  background-color: #00E003;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  border-radius: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: -1px 2px 9px 0px rgba(176,176,176,1);
+.publisher-btn {
+    width: 50px;
+    height: 50px;
+    background-color: #00E003;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -1px 2px 9px 0px rgba(176, 176, 176, 1);
 
-   
+
 }
+
 .navbar {
+
     .page,
-    .page__bd{
+    .page__bd {
         height: 100%;
     }
-    .page__bd{
+
+    .page__bd {
         padding-bottom: 0;
     }
-    .weui-tab__content{
+
+    .weui-tab__content {
         padding-top: 0px;
         text-align: center;
     }
 }
-image{
+
+image {
     width: 60rpx;
     height: 60rpx;
-  }
+}
+
 </style>
 <template>
     <view class="navbar page">
         <view class="page__bd">
-          <searchbar :fid.sync="fid"></searchbar>
+            <searchbar :fid.sync="fid"></searchbar>
             <view class="weui-tab">
-                <view class="weui-navbar" >
+                <view class="weui-navbar">
                     <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
                         <view class="weui-navbar__title">{{item}}</view>
                     </view>
                     <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
                 </view>
-                <view class="weui-tab__panel" >
-                    <view class="weui-tab__content" hidden="{{activeIndex != 0}}"><br><infolist1 style="margin-top:100rpx" :classify.sync="classify1" :fid.sync="fid" ></infolist1></view>
-                    <view class="weui-tab__content" hidden="{{activeIndex != 1}}"><br><infolist2 :classify.sync="classify2" :fid.sync="fid" ></infolist2></view>
-                    
-                    
+                <view class="weui-tab__panel">
+                    <view class="weui-tab__content" hidden="{{activeIndex != 0}}"><br>
+                        <infolist1 style="margin-top:100rpx" :classify.sync="classify1" :fid.sync="fid"></infolist1>
+                    </view>
+                    <view class="weui-tab__content" hidden="{{activeIndex != 1}}"><br>
+                        <infolist2 :classify.sync="classify2" :fid.sync="fid"></infolist2>
+                    </view>
                 </view>
             </view>
         </view>
     </view>
-     
 </template>
-
 <script>
-    import wepy from 'wepy'
-    import {subject} from '../data/data'
-    import infolist from '../components/infolist'
-    import searchbar from '../components/searchbar'
+import wepy from 'wepy'
+import { subject } from '../data/data'
+import infolist from '../components/infolist'
+import searchbar from '../components/searchbar'
 
-    const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+const sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
-    export default class Toast extends wepy.page {
+export default class Toast extends wepy.page {
 
-        config={
-            navigationBarTitleText:'办事指南'
-        }
-        data = {
-            tabs: ['人员分工', '办事流程'],
-            activeIndex: 0,
-            sliderOffset: 0,
-            sliderLeft: 0,
-            fid:'49',
-            classify1:'人员分工',
-            classify2:'办事流程',
-            
-            role:Number,
-            category:'',
-            
-
-        }
-       components={
-        
-          infolist1:infolist,
-          infolist2:infolist,
-          
-          
-          
-          searchbar:searchbar
-       }
-        methods = {
-            tabClick (e) {
-                this.sliderOffset = e.currentTarget.offsetLeft;
-                this.activeIndex = e.currentTarget.id;
-            },
-            click(e){
-                console.log(e.target.id);
-                console.log(e);
-                wx.navigateTo({url:'publish?fid='+e.target.id+'&category='+this.category})
-            }
-            
-        }
-
-        async onLoad () {
-            let res = await wepy.getSystemInfo();
-             this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
-            this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;
-            this.role=this.$parent.globalData.userinfo.role
-            console.log(subject)
-        }
+    config = {
+        navigationBarTitleText: '办事指南'
     }
+    data = {
+        tabs: ['人员分工', '办事流程'],
+        activeIndex: 0,
+        sliderOffset: 0,
+        sliderLeft: 0,
+        fid: '49',
+        classify1: '人员分工',
+        classify2: '办事流程',
+
+        role: Number,
+        category: '',
+
+
+    }
+    components = {
+
+        infolist1: infolist,
+        infolist2: infolist,
+
+
+
+        searchbar: searchbar
+    }
+    methods = {
+        tabClick(e) {
+            this.sliderOffset = e.currentTarget.offsetLeft;
+            this.activeIndex = e.currentTarget.id;
+        },
+        click(e) {
+            console.log(e.target.id);
+            console.log(e);
+            wx.navigateTo({ url: 'publish?fid=' + e.target.id + '&category=' + this.category })
+        }
+
+    }
+
+    async onLoad() {
+        let res = await wepy.getSystemInfo();
+        this.sliderLeft = (res.windowWidth / this.tabs.length - sliderWidth) / 2;
+        this.sliderOffset = res.windowWidth / this.tabs.length * this.activeIndex;
+        this.role = this.$parent.globalData.userinfo.role
+        console.log(subject)
+    }
+}
+
 </script>

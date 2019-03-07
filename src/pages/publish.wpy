@@ -1,149 +1,146 @@
 <template>
-<view style="margin-left:5px">
-<form bindsubmit="formSubmit">
-    
-   <picker name="type" bindchange="bindPickerChange" value="{{array[index]}}" range="{{array}}">
-    <view class="picker">
-      <text>类型：</text>{{array[index]}}
-    </view> 
-  </picker>
-  <view class="fenge"></view>
-  <view wx:if="{{havasub}}">
-  <picker name="typesub" bindchange="bindPickerChangesub" value="{{subject[indexsub]}}" range="{{subject}}">
-    <view class="picker">
-      <text>学科：</text>{{subject[indexsub]}}
-    </view> 
-  </picker>
-     <view class="fenge"></view></view>
-<view class="picker"><text>标题：</text><input name="title"></input></view>
-<view class="fenge"></view>
-
-内容:<textarea name="body" style="width:100vw;height:600rpx" maxlength="-1" splaceholder="填写内容。。"></textarea>
-<text style="color:#FF0011;font-size:12px">*请发布与科研有关的内容</text>
-
-<button style="position:fixed;bottom:2px;width:100vw" type="default" formType="submit">发布</button>
-</form>
-
-
-</view>
-
-
-
+    <view style="margin-left:5px">
+        <form bindsubmit="formSubmit">
+            <picker name="type" bindchange="bindPickerChange" value="{{array[index]}}" range="{{array}}">
+                <view class="picker">
+                    <text>类型：</text>{{array[index]}}
+                </view>
+            </picker>
+            <view class="fenge"></view>
+            <view wx:if="{{havasub}}">
+                <picker name="typesub" bindchange="bindPickerChangesub" value="{{subject[indexsub]}}" range="{{subject}}">
+                    <view class="picker">
+                        <text>学科：</text>{{subject[indexsub]}}
+                    </view>
+                </picker>
+                <view class="fenge"></view>
+            </view>
+            <view class="picker"><text>标题：</text><input name="title"></input></view>
+            <view class="fenge"></view>
+            内容:<textarea name="body" style="width:100vw;height:600rpx" maxlength="-1" splaceholder="填写内容。。"></textarea>
+            <text style="color:#FF0011;font-size:12px">*请发布与科研有关的内容</text>
+            <button style="position:fixed;bottom:2px;width:100vw" type="default" formType="submit">发布</button>
+        </form>
+    </view>
 </template>
-
 <script>
-    import wepy from 'wepy'
-    import util from '../pages/js/util'
-    import data from '../data/data'
-    import config from '../pages/js/config'
-    import {wxRequest} from '../pages/js/Request'
-    import tip from '../pages/js/tip'
-   
-    import uploader from '../components/uploader'
+import wepy from 'wepy'
+import util from '../pages/js/util'
+import data from '../data/data'
+import config from '../pages/js/config'
+import { wxRequest } from '../pages/js/Request'
+import tip from '../pages/js/tip'
 
-    export default class test extends wepy.page {
-        components = {
-            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
-            uploader:uploader
-        };
-        config = {
-            navigationBarTitleText: '信息发布'
-         }
-        data={
-         index:0,
-         indexsub:0,
-         havasub:Boolean,
-         subject:[],
-         array: [],
-         userinfo:{},
-         fid:Number,
-         category:String,
-          }
-        onLoad(e){
-           var fid=e.fid;
-           console.log(e.fid)
-           this.fid=e.fid;
-           if(fid>40){
-            fid=fid-41
-           }else{
-            fid=fid-1
-           }
-           console.log(e.category+fid+this.fid);
-           if(e.category.length==0){
-            this.havasub=true
-            this.subject=data.subject
+import uploader from '../components/uploader'
+
+export default class test extends wepy.page {
+    components = {
+        //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+        uploader: uploader
+    };
+    config = {
+        navigationBarTitleText: '信息发布'
+    }
+    data = {
+        index: 0,
+        indexsub: 0,
+        havasub: Boolean,
+        subject: [],
+        array: [],
+        userinfo: {},
+        fid: Number,
+        category: String,
+    }
+    onLoad(e) {
+        var fid = e.fid;
+        console.log(e.fid)
+        this.fid = e.fid;
+        if (fid > 40) {
+            fid = fid - 41
+        } else {
+            fid = fid - 1
+        }
+        console.log(e.category + fid + this.fid);
+        if (e.category.length == 0) {
+            this.havasub = true
+            this.subject = data.subject
             this.$apply()
-           }else{
-           this.category=e.category
-            }
-           this.array=data.classify[fid];
-           console.log(this.category)
-           this.userinfo=this.$parent.globalData.userinfo;
+        } else {
+            this.category = e.category
         }
-        methods={
-            bindPickerChange: function(e) {
-                console.log('picker发送选择改变，携带值为', e.detail)
-                this.index=e.detail.value;
-                   },
-            bindPickerChangesub(e){
-              console.log('picker发送选择改变，携带值为', e.detail)
-              this.indexsub=e.detail.value;
-            },
-            async formSubmit(e) {
-            	if (e.detail.value.title == "" || e.detail.value.body == "") {
+        this.array = data.classify[fid];
+        console.log(this.category)
+        this.userinfo = this.$parent.globalData.userinfo;
+    }
+    methods = {
+        bindPickerChange: function(e) {
+            console.log('picker发送选择改变，携带值为', e.detail)
+            this.index = e.detail.value;
+        },
+        bindPickerChangesub(e) {
+            console.log('picker发送选择改变，携带值为', e.detail)
+            this.indexsub = e.detail.value;
+        },
+        async formSubmit(e) {
+            if (e.detail.value.title == "" || e.detail.value.body == "") {
                 await wepy.showToast({
-                title: '请输入标题和内容',
-                icon: 'none',
-                duration: 1000
-              });
-              return
-              }      
-            	    //console.log(util.formatTime(new Date()));
-              console.log('form发生了submit事件，携带数据为：', e.detail.value);
-              console.log(e)
-              if(e.detail.value.typesub!=undefined){
-                 this.category=e.detail.value.typesub
+                    title: '请输入标题和内容',
+                    icon: 'none',
+                    duration: 1000
+                });
+                return
+            }
+            //console.log(util.formatTime(new Date()));
+            console.log('form发生了submit事件，携带数据为：', e.detail.value);
+            console.log(e)
+            if (e.detail.value.typesub != undefined) {
+                this.category = e.detail.value.typesub
                 console.log("未定义")
-              } 
-              var data={         fid: this.fid,
-                                 poster:this.userinfo.xm,
-                                 posterid:this.userinfo.gzh,
-                                 title: e.detail.value.title,
-                                 summary:e.detail.value.body,
-                                 figure:'',
-                                 bmdm:this.userinfo.bmdm,
-                                 bmmc:this.userinfo.bmmc,
-                                 role:this.userinfo.role,
-                                 category:this.category,
-                                 classify:e.detail.value.type                       }
-              let res=await wxRequest('post',config.service.addTopics+'?ip='+this.$parent.globalData.ip,data);
-              console.log(res);
-              if(res!=null)
-              this.$navigate('./msg_success?tid='+res);
+            }
+            var data = {
+                fid: this.fid,
+                poster: this.userinfo.xm,
+                posterid: this.userinfo.gzh,
+                title: e.detail.value.title,
+                summary: e.detail.value.body,
+                figure: '',
+                bmdm: this.userinfo.bmdm,
+                bmmc: this.userinfo.bmmc,
+                role: this.userinfo.role,
+                category: this.category,
+                classify: e.detail.value.type
+            }
+            let res = await wxRequest('post', config.service.addTopics + '?ip=' + this.$parent.globalData.ip, data);
+            console.log(res);
+            if (res != null)
+                this.$navigate('./msg_success?tid=' + res);
 
-                    
-                },
-            
-        }
+
+        },
 
     }
+
+}
+
 </script>
 <style lang="css">
-.fenge{
-  height: 1px;
-  width: 100%;
-  background-color:#DCDCDC;
-  margin-bottom: 10px;
-  margin-top: 5px;
-  }
-.picker{
-    display:flex;
-    margin-left:10px;
+.fenge {
+    height: 1px;
+    width: 100%;
+    background-color: #DCDCDC;
+    margin-bottom: 10px;
+    margin-top: 5px;
 }
-#title{
+
+.picker {
+    display: flex;
+    margin-left: 10px;
+}
+
+#title {
     background-color: #EFEFEF;
-    margin-left:5px;
-    width:80%;
+    margin-left: 5px;
+    width: 80%;
 }
 
 </style>
