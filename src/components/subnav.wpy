@@ -1,165 +1,172 @@
 <template>
-
-<view class"container1">
+    <view class"container1">
         <view class="nav_list1">
-          <view class="nav1">
-        <navigator open-type="navigate" url="/pages/zcinfo">
-        <image src="../images/electronics.png" class="nav_icon"></image>
-        <view class="nav_text">科研政策</view>
-          </navigator>
-         </view>
-         <view class="nav2">
-          <navigator open-type="navigate" url="/pages/teacherinfo">
-        <image src="../images/supplier-features.png" class="nav_icon"></image>
-        <view class="nav_text">教师科研</view>
-          </navigator>
-         </view>
-         <view class="nav3">
-          <navigator open-type="navigate" url="/pages/require">
-        <image src="../images/trust.png" class="nav_icon"></image>
-        <view class="nav_text">地方需求</view>
-          </navigator>
+            <view class="nav1">
+                <navigator open-type="navigate" url="/pages/zcinfo">
+                    <image src="../images/electronics.png" class="nav_icon"></image>
+                    <view class="nav_text">科研政策</view>
+                </navigator>
+            </view>
+            <view class="nav2">
+                <navigator open-type="navigate" url="/pages/teacherinfo">
+                    <image src="../images/supplier-features.png" class="nav_icon"></image>
+                    <view class="nav_text">教师科研</view>
+                </navigator>
+            </view>
+            <view class="nav3">
+                <navigator open-type="navigate" url="/pages/require">
+                    <image src="../images/trust.png" class="nav_icon"></image>
+                    <view class="nav_text">地方需求</view>
+                </navigator>
+            </view>
         </view>
-</view>
-         <view class="nav_list1">
-          <view class="nav4">
-          <navigator open-type="navigate" url="/pages/Topten">
-        <image src="../images/hot.png" class="nav_icon"></image>
-        <view class="nav_text">热帖榜</view>
-          </navigator>
-         </view>
-         <view class="nav4">
-          <navigator open-type="navigate" url="/pages/inform">
-        <image src="../images/remind.png" class="nav_icon"></image>
-        <view class="nav_text">科研通知</view>
-          </navigator>
-         </view>
-         <view class="nav4" style="margin-right:2px">
-          <navigator open-type="navigate" url="/pages/dynamic">
-        <image src="../images/rejected-order.png" class="nav_icon"></image>
-        <view class="nav_text">科研动态</view>
-          </navigator>
+        <view class="nav_list1">
+            <view class="nav4">
+                <navigator open-type="navigate" url="/pages/Topten">
+                    <image src="../images/hot.png" class="nav_icon"></image>
+                    <view class="nav_text">热帖榜</view>
+                </navigator>
+            </view>
+            <view class="nav4">
+                <navigator open-type="navigate" url="/pages/inform">
+                    <image src="../images/remind.png" class="nav_icon"></image>
+                    <view class="nav_text">科研通知</view>
+                </navigator>
+            </view>
+            <view class="nav4" style="margin-right:2px">
+                <navigator open-type="navigate" url="/pages/dynamic">
+                    <image src="../images/rejected-order.png" class="nav_icon"></image>
+                    <view class="nav_text">科研动态</view>
+                </navigator>
+            </view>
         </view>
-   </view>
-   <view class="nav_list1">
-          <view class="nav5">
-          <navigator open-type="navigate" url="/pages/interaction">
-        <image src="../images/comments.png" class="nav_icon"></image>
-        <view class="nav_text">互动交流</view>
-          </navigator>
-         </view>
-         <view class="nav2" style="background-color:#43C424">
-          <navigator open-type="navigate" url="/pages/report">
-        <image src="../images/RFQ.png" class="nav_icon"></image>
-        <view class="nav_text">学术报告</view>
-          </navigator>
-         </view>
-         <view class="nav6" >
-          <navigator open-type="navigate" url="/pages/settings">
-        <image src="../images/account.png" class="nav_icon"></image>
-        <view class="nav_text">个人中心</view>
-          </navigator>
+        <view class="nav_list1">
+            <view class="nav5">
+                <navigator open-type="navigate" url="/pages/interaction">
+                    <image src="../images/comments.png" class="nav_icon"></image>
+                    <view class="nav_text">互动交流</view>
+                </navigator>
+            </view>
+            <view class="nav2" style="background-color:#43C424">
+                <navigator open-type="navigate" url="/pages/report">
+                    <image src="../images/RFQ.png" class="nav_icon"></image>
+                    <view class="nav_text">学术报告</view>
+                </navigator>
+            </view>
+            <view class="nav6">
+                <navigator open-type="navigate" url="/pages/settings">
+                    <image src="../images/account.png" class="nav_icon"></image>
+                    <view class="nav_text">个人中心</view>
+                </navigator>
+            </view>
         </view>
-   </view>
- </view>
-   
-
-
-
-</view>
+    </view>
+    </view>
 </template>
-
-
 <script>
-    import wepy from 'wepy';
-    export default class Index extends wepy.component {
-        components = {
-            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
-            
-        };
-        data={
-        
+import wepy from 'wepy';
+export default class Index extends wepy.component {
+    components = {
+        //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
 
-        };
-        onLoad(){
-         
-        }
+    };
+    data = {
+
+
+    };
+    onLoad() {
+
     }
+}
+
 </script>
 <style lang="css">
-.container1{
-  
-  border-radius: 12px;
-  width: 100%;
-  height: auto;
-}
-.nav_list1{
-  display:flex;
-  flex-wrap: row;
-  
-}
-.nav1{
-  float: left;
-   width: 33%;
-  height: 23vw;
-  border-top-left-radius:12px;
-  margin-left: 2px;
-  margin-top: 2px;
-  background-color:#FE697FFF; 
-}
-.nav2{
-  float: center;
-  width: 33%;
-  height: 23vw;
-   background-color:#FE697FFF; 
-   margin: 2px 2px;
-}
-.nav3{
-  float: right;
-   width: 33%;
-  height: 23vw;
-  border-top-right-radius:12px;
-  margin-right: 2px;
-  margin-top: 2px;
-  background-color:#FE697FFF; 
-}
-.nav4{float: left;
-   width: 33%;
-  height: 23vw;
-margin-left: 2px;
+.container1 {
 
-  
-  background-color:#3D98FE}
-.nav5{
-  float: left;
-   width: 33%;
-  height: 23vw;
-  border-bottom-left-radius:12px;
-  margin-left: 2px;
-  margin-top: 2px;
-  background-color:#43C424; 
+    border-radius: 12px;
+    width: 100%;
+    height: auto;
 }
-.nav6{
-   float: right;
-   width: 33%;
-  height: 23vw;
-  border-bottom-right-radius:12px;
-  margin-right: 2px;
-  margin-top: 2px;
-  background-color:#43C424;
+
+.nav_list1 {
+    display: flex;
+    flex-wrap: row;
+
 }
-navigator{
+
+.nav1 {
+    float: left;
+    width: 33%;
+    height: 23vw;
+    border-top-left-radius: 12px;
+    margin-left: 2px;
+    margin-top: 2px;
+    background-color: #FE697FFF;
+}
+
+.nav2 {
+    float: center;
+    width: 33%;
+    height: 23vw;
+    background-color: #FE697FFF;
+    margin: 2px 2px;
+}
+
+.nav3 {
+    float: right;
+    width: 33%;
+    height: 23vw;
+    border-top-right-radius: 12px;
+    margin-right: 2px;
+    margin-top: 2px;
+    background-color: #FE697FFF;
+}
+
+.nav4 {
+    float: left;
+    width: 33%;
+    height: 23vw;
+    margin-left: 2px;
+
+
+    background-color: #3D98FE
+}
+
+.nav5 {
+    float: left;
+    width: 33%;
+    height: 23vw;
+    border-bottom-left-radius: 12px;
+    margin-left: 2px;
+    margin-top: 2px;
+    background-color: #43C424;
+}
+
+.nav6 {
+    float: right;
+    width: 33%;
+    height: 23vw;
+    border-bottom-right-radius: 12px;
+    margin-right: 2px;
+    margin-top: 2px;
+    background-color: #43C424;
+}
+
+navigator {
     text-align: center
-  }
-  .nav_icon{
-    height:80rpx;
-    margin:12px auto;
-    width:80rpx;
-    margin-bottom:14rpx;
-  }
-  .nav_text {
+}
+
+.nav_icon {
+    height: 80rpx;
+    margin: 12px auto;
+    width: 80rpx;
+    margin-bottom: 14rpx;
+}
+
+.nav_text {
     font-size: 26rpx;
     color: white;
-    text-align:center;
-  }
+    text-align: center;
+}
+
 </style>

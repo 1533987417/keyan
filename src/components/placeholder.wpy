@@ -1,6 +1,5 @@
 <template>
     <view class="empty-placeholder row-center" wx:if="{{show}}">
-        
         <view class="txt">{{message}}</view>
     </view>
 </template>
@@ -17,12 +16,14 @@ export default class Placeholder extends wepy.component {
         }
     };
 }
+
 </script>
 <style lang="less">
 .empty-placeholder {
-margin-top:150rpx;
+    margin-top: 150rpx;
     width: 100%;
     text-align: center;
+
     text {
         color: #666;
         font-size: 40rpx;
@@ -42,4 +43,5 @@ margin-top:150rpx;
     color: #888888;
     margin-top: 36rpx;
 }
+
 </style>

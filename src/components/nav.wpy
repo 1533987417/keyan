@@ -1,69 +1,71 @@
 <template>
-
-<view class"container1">
+    <view class"container1">
         <view class="nav_list">
-      <navigator open-type="navigate" url="/pages/advice">
-        <image src="../images/213424.png" class="nav_icon"></image>
-        <view class="nav_text1">意见建议</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/banshi">
-        <image src="../images/wuli.png" class="nav_icon"></image>
-        <view class="nav_text1">办事指南</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/t">
-        <image src="../images/settings-selected.png" class="nav_icon"></image>
-        <view class="nav_text1">系统设置</view>
-      </navigator>
-      <view @tap="click">
-        <image src="../images/caozuo.png" class="nav_icon"></image>
-        <view class="nav_text1">操作指南</view>
-      </view>
+            <navigator open-type="navigate" url="/pages/advice">
+                <image src="../images/213424.png" class="nav_icon"></image>
+                <view class="nav_text1">意见建议</view>
+            </navigator>
+            <navigator open-type="navigate" url="/pages/banshi">
+                <image src="../images/wuli.png" class="nav_icon"></image>
+                <view class="nav_text1">办事指南</view>
+            </navigator>
+            <navigator open-type="navigate" url="/pages/t">
+                <image src="../images/settings-selected.png" class="nav_icon"></image>
+                <view class="nav_text1">系统设置</view>
+            </navigator>
+            <view @tap="click">
+                <image src="../images/caozuo.png" class="nav_icon"></image>
+                <view class="nav_text1">操作指南</view>
+            </view>
+        </view>
     </view>
-</view>
 </template>
-
-
 <script>
-    import wepy from 'wepy';
-    import tip from '../pages/js/tip'
-    export default class Index extends wepy.component {
-        components = {
-            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
-            
-        };
-        data={
-        
+import wepy from 'wepy';
+import tip from '../pages/js/tip'
+export default class Index extends wepy.component {
+    components = {
+        //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
 
-        };
-        methods={
-          click(){
-                tip.confirm('打开app查看使用指南')
-          }
+    };
+    data = {
+
+
+    };
+    methods = {
+        click() {
+            tip.confirm('打开app查看使用指南')
         }
     }
+}
+
 </script>
 <style lang="less">
-.nav_list{
-  
-  border-radius:12px;
-  
-  color:#404040;
-  display:flex;
-  font-size:26rpx;
-  justify-content:space-around;
-  background-color: #FFFAF0;
-  padding:10rpx 30rpx;
-  navigator{
-    text-align:center
-  }
-  .nav_icon{
-    height:80rpx;
-    margin:0 auto;
-    width:80rpx;
-    margin-bottom:14rpx;
-  }
-  .nav_text1{
-    font-size: 26rpx
-  }
+.nav_list {
+
+    border-radius: 12px;
+
+    color: #404040;
+    display: flex;
+    font-size: 26rpx;
+    justify-content: space-around;
+    background-color: #FFFAF0;
+    padding: 10rpx 30rpx;
+
+    navigator {
+        text-align: center
+    }
+
+    .nav_icon {
+        height: 80rpx;
+        margin: 0 auto;
+        width: 80rpx;
+        margin-bottom: 14rpx;
+    }
+
+    .nav_text1 {
+        font-size: 26rpx
+    }
 }
+
 </style>

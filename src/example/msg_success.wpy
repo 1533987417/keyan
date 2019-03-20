@@ -1,5 +1,5 @@
 <style lang="less">
-page{
+    page{
     background-color: #FFFFFF;
 }
 .weui-msg{
@@ -45,7 +45,8 @@ page{
             </view>
             <view class="weui-msg__text-area">
                 <view class="weui-msg__title">操作成功</view>
-                <view class="weui-msg__desc">内容详情，可根据实<navigator url="" class="weui-msg__link">文字链接</navigator></view>
+                <view class="weui-msg__desc">内容详情，可根据实<navigator url="" class="weui-msg__link">文字链接</navigator>
+                </view>
             </view>
             <view class="weui-msg__opr-area">
                 <view class="weui-btn-area">
@@ -64,11 +65,11 @@ page{
         </view>
     </view>
 </template>
-
 <script>
-    import wepy from 'wepy';
+import wepy from 'wepy';
 
-    export default class MsgSuccess extends wepy.page {
+export default class MsgSuccess extends wepy.page {
 
-    }
+}
+
 </script>

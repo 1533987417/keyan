@@ -1,29 +1,17 @@
 <template>
-<view class="container">
-  <view class="subcontainer">
-     <view class="line"><span class="head">研究方向：</span><input type="text" class="text" value="{{user[0][36]}}"></input></view>
-     <view class="line"><span class="head">学历/学位：</span><input type="text" class="text" value="{{user[0][8]}}/{{user[0][9]}}"></input></view>
-     <view class="line"><span class="head">学科：</span><input type="text" class="text" 
-      value="{{user[0][21]}}"></input></view>
-     <view class="line"><span class="head">职称：</span><input type="text" class="text"
-      value="{{user[0][6]}}"></input></view>
-     <view class="line"><span class="head">EMAIL：</span><input type="text" class="text"
-      value="{{user[0][33]}}"></input></view>
-     <view class="line"><span class="head">办公电话：</span><input type="text" class="text" value="{{user[0][34]}}"></input></view>
-     <view class="line"><span class="head">手机：</span><input type="text" class="text"
-      value="{{user[0][35]}}"></input></view>
-     <view class="line"><span class="head">QQ：</span><input type="text" class="text"
-      value="{{user[0][37]}}"></input></view>
-     <view class="line"><span class="head">个人简介：</span><textarea id="text1" cols="" rows="" value="{{user[0][38]}}"></textarea></view>
-    
-
-
-
- 
-
-  </view>
-
-</view>
+    <view class="container">
+        <view class="subcontainer">
+            <view class="line"><span class="head">研究方向：</span><input type="text" class="text" value="{{user[0][36]}}"></input></view>
+            <view class="line"><span class="head">学历/学位：</span><input type="text" class="text" value="{{user[0][8]}}/{{user[0][9]}}"></input></view>
+            <view class="line"><span class="head">学科：</span><input type="text" class="text" value="{{user[0][21]}}"></input></view>
+            <view class="line"><span class="head">职称：</span><input type="text" class="text" value="{{user[0][6]}}"></input></view>
+            <view class="line"><span class="head">EMAIL：</span><input type="text" class="text" value="{{user[0][33]}}"></input></view>
+            <view class="line"><span class="head">办公电话：</span><input type="text" class="text" value="{{user[0][34]}}"></input></view>
+            <view class="line"><span class="head">手机：</span><input type="text" class="text" value="{{user[0][35]}}"></input></view>
+            <view class="line"><span class="head">QQ：</span><input type="text" class="text" value="{{user[0][37]}}"></input></view>
+            <view class="line"><span class="head">个人简介：</span><textarea id="text1" cols="" rows="" value="{{user[0][38]}}"></textarea></view>
+        </view>
+    </view>
 </template>
 <script>
     import wepy from 'wepy'
@@ -59,7 +47,7 @@
     }
 </script>
 <style type="less">
-.container{
+    .container{
   background-color: #F2F2F2;
 }
 .subcontainer{

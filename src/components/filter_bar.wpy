@@ -1,80 +1,76 @@
 <!--筛选栏-->
 <template>
-  <view class="bar">
-    <view class="filter">
-      <view class="nav {{currentType=='1' ? 'nav_active' : ''}}" data-current="1" @tap="orderBy">标题</view>
-      <view class="nav  {{currentType=='0' ? 'nav_active' : ''}}" data-current="0" @tap="orderBy">发帖人</view>
-     
-      </view>
-      
+    <view class="bar">
+        <view class="filter">
+            <view class="nav {{currentType=='1' ? 'nav_active' : ''}}" data-current="1" @tap="orderBy">标题</view>
+            <view class="nav  {{currentType=='0' ? 'nav_active' : ''}}" data-current="0" @tap="orderBy">发帖人</view>
+        </view>
     </view>
-    
-    
-  </view>
+    </view>
 </template>
-
 <script>
-  import wepy from 'wepy';
-  
-  export default class filterBar extends wepy.component {
+import wepy from 'wepy';
+
+export default class filterBar extends wepy.component {
     data = {
-      currentType: "",
-      
-      flag: false,
-      
+        currentType: "",
+
+        flag: false,
+
     }
     components = {
-      
+
     }
     methods = {
-      
-      orderBy(e) {
-        console.log(e.target.dataset.current);
-        this.currentType=e.target.dataset.current;
-    }}
-   
+
+        orderBy(e) {
+            console.log(e.target.dataset.current);
+            this.currentType = e.target.dataset.current;
+        }
+    }
+
     watch = {
-      currentType(newValue) {
-        this.$emit("currentType", {
-          orderfield: newValue,
-          
-        });
-      },
-      
+        currentType(newValue) {
+            this.$emit("currentType", {
+                orderfield: newValue,
+
+            });
+        },
+
     }
     events = {
-      
+
     }
-  }
+}
+
 </script>
-
 <style lang="less">
-  .filter {
+.filter {
     display: flex;
-  
-    justify-content:flex-start;
-   
+
+    justify-content: flex-start;
+
     .nav {
-      color: #000000;
-      font-size: 26rpx;
-      padding: 2px 20px 2px;
-      height:auto;
-      border-radius:5px;
-      border:1rpx solid #E8E8E8FF;
-      margin-left:15px;
+        color: #000000;
+        font-size: 26rpx;
+        padding: 2px 20px 2px;
+        height: auto;
+        border-radius: 5px;
+        border: 1rpx solid #E8E8E8FF;
+        margin-left: 15px;
 
 
     }
+
     .nav_active {
-      color: #f03939;
+        color: #f03939;
     }
+
     .icon-filter {
-      font-size: 26rpx;
-      color: #666;
-      margin-left: 5rpx;
+        font-size: 26rpx;
+        color: #666;
+        margin-left: 5rpx;
     }
-  }
-  
- 
- 
+}
+
 </style>

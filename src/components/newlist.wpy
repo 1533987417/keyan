@@ -1,140 +1,140 @@
 <template>
-
-<scroll-view scroll-y style="height:950rpx"  bindscrolltolower="lower"
-scroll-with-animation="true">
-<block wx:for="{{news}}" wx:key="rowId">
-<navigator url="./web?url={{item.url}}" open-type="navigate">
-  <view style="margin-left:5px">
-    <view class="swiper-item">{{item.title}}</view>
-    <view class="sub_swiper-item">时间：{{item.date}}</view>
-    <view class="fenge"></view>
-  </view>
-</navigator>  
-</block>
-<empty :isNone.sync="isNone"></empty>
-</scroll-view>
-
+    <scroll-view scroll-y style="height:950rpx" bindscrolltolower="lower" scroll-with-animation="true">
+        <block wx:for="{{news}}" wx:key="rowId">
+            <navigator url="./web?url={{item.url}}" open-type="navigate">
+                <view style="margin-left:5px">
+                    <view class="swiper-item">{{item.title}}</view>
+                    <view class="sub_swiper-item">时间：{{item.date}}</view>
+                    <view class="fenge"></view>
+                </view>
+            </navigator>
+        </block>
+        <empty :isNone.sync="isNone"></empty>
+    </scroll-view>
 </template>
-
-
 <script>
 import wepy from 'wepy'
 import util from '../pages/js/util'
 import config from '../pages/js/config'
-import {wxRequest} from '../pages/js/Request.js'
+import { wxRequest } from '../pages/js/Request.js'
 import empty from '../components/empty'
 
 
 export default class Index extends wepy.component {
-  components = {
-            //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
-           empty:empty
-          };
+    components = {
+        //为两个相同组件的不同实例分配不同的组件ID，从而避免数据同步变化的问题
+        empty: empty
+    };
 
-          
-          data={
-              
-          
-            flag:true,
-            isNone:false,
-            page:0,
-            news:[]
-          };
-          methods={
-            lower(e) {
-           if(this.flag){
-            
-            //console.log(e+'到底部了');
-            this.getmore();
-            
-          }}
-          }
-          onLoad() {
-            console.log('onLoad');
-            this.getmore();
 
-            //this.news=newslist.newslist;
-          }
-          async getmore(){
-            
+    data = {
 
-            try {
-              console.log("加载没")
-              //let res= await wxRequest('get',config.service.Top5News);
-              let resp=await wxRequest('get',config.service.PageNews+'?page='+this.page)
-              //console.log(res);
-              //console.log(resp.content[0].date)
-              this.page=this.page+1
-              if(resp.content.length==0||resp.content.length<7){
-                this.flag=false;
-                this.isNone=true;
-              }
 
-              var x;
-              for(x in resp.content){
-                  resp.content[x].date=util.timechange(resp.content[x].date)
-                  resp.content[x].url=resp.content[x].url.replace('?','%3F')
-                   resp.content[x].url=resp.content[x].url.replace('=','%3D')
-                
-              }
-               console.log(resp.content)
-              this.news=this.news.concat(resp.content);
-              this.$apply();
+        flag: true,
+        isNone: false,
+        page: 0,
+        news: []
+    };
+    methods = {
+        lower(e) {
+            if (this.flag) {
 
-            } catch (error) {
-              console.log(error);
+                //console.log(e+'到底部了');
+                this.getmore();
+
             }
-            
-            /*let self=this;
-            wepy.request(config.service.Topten+'?fid='+self.fid).then((d)=>{
-              console.log(d.data);
-              console.log('this.newslist');
-              
-            });*/
+        }
+    }
+    onLoad() {
+        console.log('onLoad');
+        this.getmore();
 
-          }
+        //this.news=newslist.newslist;
+    }
+    async getmore() {
+
+
+        try {
+            console.log("加载没")
+            //let res= await wxRequest('get',config.service.Top5News);
+            let resp = await wxRequest('get', config.service.PageNews + '?page=' + this.page)
+            //console.log(res);
+            //console.log(resp.content[0].date)
+            this.page = this.page + 1
+            if (resp.content.length == 0 || resp.content.length < 7) {
+                this.flag = false;
+                this.isNone = true;
+            }
+
+            var x;
+            for (x in resp.content) {
+                resp.content[x].date = util.timechange(resp.content[x].date)
+                resp.content[x].url = resp.content[x].url.replace('?', '%3F')
+                resp.content[x].url = resp.content[x].url.replace('=', '%3D')
+
+            }
+            console.log(resp.content)
+            this.news = this.news.concat(resp.content);
+            this.$apply();
+
+        } catch (error) {
+            console.log(error);
         }
 
-    </script>
-<style lang="less">
-.swiper-item{
-  
-   color:#000000FF;
-  font-size:15px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  letter-spacing:2px;
-  text-align:left;
-  margin-left:12px;
-  
-}
-.sub_swiper-item{
-  color:#A69D86;
-  font-size:13px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  letter-spacing:2px;
-  text-align:left;
-  margin-left:10px;
-  margin-top:4px;
-  
-}
-.fenge{
-    height: 1px;
-  width: 100%;
-  background-color:#DCDCDC;
-  margin-bottom: 10px;
-  margin-top: 5px;
-  }
-  .imgaction{
-    width: 12px;
-    height:12px;
-    margin-left:2px;
-    float:center;
-  margin-top:4px;
+        /*let self=this;
+        wepy.request(config.service.Topten+'?fid='+self.fid).then((d)=>{
+          console.log(d.data);
+          console.log('this.newslist');
+          
+        });*/
 
-    
-  }
+    }
+}
+
+</script>
+<style lang="less">
+.swiper-item {
+
+    color: #000000FF;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: 2px;
+    text-align: left;
+    margin-left: 12px;
+
+}
+
+.sub_swiper-item {
+    color: #A69D86;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: 2px;
+    text-align: left;
+    margin-left: 10px;
+    margin-top: 4px;
+
+}
+
+.fenge {
+    height: 1px;
+    width: 100%;
+    background-color: #DCDCDC;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.imgaction {
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+    float: center;
+    margin-top: 4px;
+
+
+}
+
 </style>
